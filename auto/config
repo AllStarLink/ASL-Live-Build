@@ -1,0 +1,12 @@
+#!/bin/sh
+
+lb config noauto \
+    --architectures amd64 \
+    --debootstrap-options "--include=ca-certificates" \
+    ­­binary­images iso \
+    ­­debian­installer live \
+    ­­mode debian \
+    ­­debian­installer­gui false \
+    ­­archive­areas "main contrib non­free" \
+    ­­security true
+    "${@}"

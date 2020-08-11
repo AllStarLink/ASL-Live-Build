@@ -26,8 +26,8 @@ if [[ " ${@} " =~ " build_rpi " ]]; then
     --system normal 
     --updates false 
     --security false)
-  cp -a rpi_files/archives config/archives
-  cp -a rpi_files/package-lists config/package-lists
+  cp -a rpi_files/archives/* config/archives
+  cp -a rpi_files/package-lists/* config/package-lists
 else
     args=${@}
     OPTIONS+=(

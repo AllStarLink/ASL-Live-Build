@@ -46,7 +46,7 @@ mv $ROOTFS/boot/* $BOOTFS
 install -m 644 rpi_files/config.txt $BOOTFS
 install -m 644 rpi_files/cmdline.txt $BOOTFS
 install -m 644 rpi_files/fstab $ROOTFS/etc
-install -m 644 rpi_files/hosts $ROOTFS/hosts
+install -m 644 rpi_files/hosts $ROOTFS/etc/hosts
 install -m 755 rpi_files/resize2fs_once $ROOTFS/etc/init.d
 touch $BOOTFS/ssh
 

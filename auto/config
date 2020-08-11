@@ -42,6 +42,6 @@ fi
 
 # check for qemu-static
 
-echo lb config noauto \
+lb config noauto \
     "${OPTIONS[@]}" \
     "${args}"

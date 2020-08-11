@@ -38,6 +38,13 @@ else
     --debian-installer-gui false
     --archive-areas "main contrib non-free"
     --security true )
+for f in `ls rpi_files/archives/`; do
+  rm config/archives/$f
+done
+for f in `ls rpi_files/package-lists`; do
+  echo $f
+  rm config/package-lists/$f
+done
 fi
 
 # check for qemu-static

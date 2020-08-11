@@ -1,2 +1,1 @@
-deb http://archive.raspberrypi.org/debian/ buster main
 deb https://kc1kcc.com/repos/asl_builds buster main

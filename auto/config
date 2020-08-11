@@ -22,6 +22,7 @@ if [[ " ${@} " =~ " build_rpi " ]]; then
     --mirror-binary "http://raspbian.raspberrypi.org/raspbian/" 
     --linux-packages none 
     --debootstrap-options "--keyring./raspbian_apt.gpg--include=ca-certificates"
+    --archive-areas "main contrib non-free rpi"
     --system normal 
     --updates false 
     --security false)

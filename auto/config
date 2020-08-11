@@ -1,13 +1,28 @@
 #!/bin/sh
 
+# check for qemu-static
+
 lb config noauto \
-    --architectures amd64 \
-    --debootstrap-options "--include=ca-certificates" \
-    --binary-images iso \
-    --debian-installer live \
+    --architectures armhf \
+    --binary-images hdd \
+    --binary-filesystem ext4 \
+    --hdd-size 2048 \
+    --hdd-partition-start 256MB \
+    --bootstrap-qemu-arch armhf \
+    --bootstrap-qemu-static /usr/bin/qemu-arm-static \
+    --bootappend-live "boot=live config hostname=pi username=pi" \
+    --chroot-filesystem none \
+    --firmware-binary false \
+    --firmware-chroot false \
+    --linux-flavours rpi \
+    --mirror-bootstrap "http://raspbian.raspberrypi.org/raspbian/" \
+    --mirror-binary "http://raspbian.raspberrypi.org/raspbian/" \
+    --linux-packages none \
+    --debootstrap-options "--keyring ./raspbian_apt.gpg --include=ca-certificates" \
     --mode debian \
     --distribution buster \
-    --debian-installer-gui false \
-    --archive-areas "main contrib non-free" \
-    --security true
+    --archive-areas "main contrib non-free rpi" \
+    --system normal \
+    --updates false \
+    --security false
     "${@}"

@@ -16,6 +16,10 @@ chroot.packages.*
 
 config/build
 
+config/archives/*raspbian*
+config/archives/*Raspbian*
+config/package-lists/*raspbian*
+
 config/binary
 config/bootstrap
 config/chroot

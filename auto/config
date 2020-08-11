@@ -39,11 +39,11 @@ else
     --archive-areas "main contrib non-free"
     --security true )
 for f in `ls rpi_files/archives/`; do
-  rm config/archives/$f
+  rm config/archives/$f 2>/dev/null
 done
 for f in `ls rpi_files/package-lists`; do
   echo $f
-  rm config/package-lists/$f
+  rm config/package-lists/$f 2>/dev/null
 done
 fi
 

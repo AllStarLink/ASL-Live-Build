@@ -21,7 +21,7 @@ if [[ " ${@} " =~ " build_rpi " ]]; then
     --mirror-bootstrap "http://raspbian.raspberrypi.org/raspbian/" 
     --mirror-binary "http://raspbian.raspberrypi.org/raspbian/" 
     --linux-packages none 
-    --debootstrap-options "--keyring./raspbian_apt.gpg--include=ca-certificates"
+    --debootstrap-options "--keyring ./raspbian_apt.gpg  --include=ca-certificates"
     --archive-areas "main contrib non-free rpi"
     --system normal 
     --updates false 
@@ -32,7 +32,7 @@ else
     args=${@}
     OPTIONS+=(
     --architectures amd64
-    --debootstrap-options --include=ca-certificates
+    --debootstrap-options "--keyring ./debian-archive-buster-stable.gpg --include=ca-certificates"
     --binary-images iso
     --debian-installer live
     --debian-installer-gui false

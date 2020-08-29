@@ -10,6 +10,6 @@ lb build
 for raspberry pi image
 <pre>
 lb clean
-lb config rpi_build
+lb config build_rpi
 lb build
 </pre>

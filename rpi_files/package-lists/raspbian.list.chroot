@@ -1,5 +1,5 @@
-raspberrypi-kernel-headers
-raspberrypi-kernel
+asl-raspberrypi-kernel-headers
+asl-raspberrypi-kernel
 raspberrypi-bootloader
 ssh
 less

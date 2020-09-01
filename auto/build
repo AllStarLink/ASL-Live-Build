@@ -3,3 +3,7 @@
 set -e
 
 lb build noauto "${@}" 2>&1 | tee build.log
+
+if [ -f "live-image-armhf.img" ]; then
+    ./rpi_files/rpi_setup.sh
+fi

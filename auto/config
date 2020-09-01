@@ -1,13 +1,54 @@
-#!/bin/sh
+#!/bin/bash
+
+OPTIONS=( --mode debian
+    --distribution buster )
+
+if [[ " ${@} " =~ " build_rpi " ]]; then
+  args=( ${@/build_rpi} )
+  OPTIONS+=(
+    --architectures armhf 
+    --binary-images hdd 
+    --binary-filesystem ext4 
+    --hdd-size 4096
+    --hdd-partition-start 512MB 
+    --bootstrap-qemu-arch armhf 
+    --bootstrap-qemu-static /usr/bin/qemu-arm-static 
+    --bootappend-live "boot=live config hostname=pi username=pi"
+    --chroot-filesystem none 
+    --firmware-binary false 
+    --firmware-chroot false 
+    --linux-flavours rpi 
+    --mirror-bootstrap "http://raspbian.raspberrypi.org/raspbian/" 
+    --mirror-binary "http://raspbian.raspberrypi.org/raspbian/" 
+    --linux-packages none 
+    --debootstrap-options "--keyring ./raspbian_apt.gpg  --include=ca-certificates"
+    --archive-areas "main contrib non-free rpi"
+    --system normal 
+    --updates false 
+    --security false)
+  cp -a rpi_files/archives/* config/archives
+  cp -a rpi_files/package-lists/* config/package-lists
+else
+    args=${@}
+    OPTIONS+=(
+    --architectures amd64
+    --debootstrap-options "--keyring ./debian-archive-buster-stable.gpg --include=ca-certificates"
+    --binary-images iso
+    --debian-installer live
+    --debian-installer-gui false
+    --archive-areas "main contrib non-free"
+    --security true )
+for f in `ls rpi_files/archives/`; do
+  rm config/archives/$f 2>/dev/null
+done
+for f in `ls rpi_files/package-lists`; do
+  echo $f
+  rm config/package-lists/$f 2>/dev/null
+done
+fi
+
+# check for qemu-static
 
 lb config noauto \
-    --architectures amd64 \
-    --debootstrap-options "--include=ca-certificates" \
-    --binary-images iso \
-    --debian-installer live \
-    --mode debian \
-    --distribution buster \
-    --debian-installer-gui false \
-    --archive-areas "main contrib non-free" \
-    --security true
-    "${@}"
+    "${OPTIONS[@]}" \
+    "${args}"

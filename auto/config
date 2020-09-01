@@ -9,8 +9,8 @@ if [[ " ${@} " =~ " build_rpi " ]]; then
     --architectures armhf 
     --binary-images hdd 
     --binary-filesystem ext4 
-    --hdd-size 2048 
-    --hdd-partition-start 256MB 
+    --hdd-size 4096
+    --hdd-partition-start 512MB 
     --bootstrap-qemu-arch armhf 
     --bootstrap-qemu-static /usr/bin/qemu-arm-static 
     --bootappend-live "boot=live config hostname=pi username=pi"

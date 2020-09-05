@@ -61,3 +61,14 @@ netbase
 libraspberrypi-bin
 libraspberrypi0
 raspi-config
+firmware-atheros
+firmware-brcm80211
+firmware-libertas
+firmware-misc-nonfree
+firmware-realtek
+freetype2-doc
+libiw30:armhf
+libwbclient0:armhf
+raspberrypi-net-mods
+wireless-tools
+wpasupplicant

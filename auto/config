@@ -7,6 +7,7 @@ if [[ " ${@} " =~ " build_rpi " ]]; then
   args=( ${@/build_rpi} )
   OPTIONS+=(
     --architectures armhf 
+    --image-name asl-unofficial-kc1kcc-rpi-$(date +"%m%d%y")
     --binary-images hdd 
     --binary-filesystem ext4 
     --hdd-size 4096
@@ -32,6 +33,7 @@ else
     args=${@}
     OPTIONS+=(
     --architectures amd64
+    --image-name asl-unofficial-kc1kcc-liveinstaller-$(date +"%m%d%y")
     --debootstrap-options "--keyring ./debian-archive-buster-stable.gpg --include=ca-certificates"
     --binary-images iso
     --debian-installer live

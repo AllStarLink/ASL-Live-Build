@@ -63,8 +63,8 @@ sed -i "s/localhost/${HOST}/" "${ROOTFS}/etc/hosts"
 
 
 chroot $ROOTFS << EOT
-adduser --disabled-password --gecos "" pi
-echo "pi:raspberry" | chpasswd
+adduser --disabled-password --gecos "" repeater
+echo "repeater:allstarlink" | chpasswd
 
 for GRP in input spi i2c gpio; do
 

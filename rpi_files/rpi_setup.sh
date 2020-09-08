@@ -8,19 +8,19 @@ Check_stagefile .build/binary_rpi
 
 
 
-DISKIMAGE=live-image-armhf.img
+DISKIMAGE="$(cat config/build | grep ^Name:.*rpi | sed 's/^Name: \(.*\)$/\1/g')-armhf.img"
 
 OFFSET=$(expr $(fdisk -u -l $DISKIMAGE | sed -ne "s|^${DISKIMAGE}1[ *]*\([0-9]*\).*|\1|p") '*' 512)
 OFFSETm1=$(expr $OFFSET '-' 1)
 
-parted -s live-image-armhf.img rm 1
-parted -s live-image-armhf.img unit B mkpart primary fat32 4194304 $OFFSETm1
-parted -s live-image-armhf.img unit B mkpart primary ext4 $OFFSET 100%
+parted -s $DISKIMAGE rm 1
+parted -s $DISKIMAGE unit B mkpart primary fat32 4194304 $OFFSETm1
+parted -s $DISKIMAGE unit B mkpart primary ext4 $OFFSET 100%
 
 DEVB=$(losetup -f)
-losetup -o 4194304 --sizelimit $(expr $OFFSET '-' 4194304) $DEVB live-image-armhf.img
+losetup -o 4194304 --sizelimit $(expr $OFFSET '-' 4194304) $DEVB $DISKIMAGE
 DEVR=$(losetup -f)
-losetup -o $OFFSET $DEVR live-image-armhf.img
+losetup -o $OFFSET $DEVR $DISKIMAGE
 
 
 mkdosfs -n boot -F 32 -v $DEVB
@@ -88,6 +88,10 @@ losetup -d $DEVR
 losetup -d $DEVB
 rmdir $ROOTFS
 rmdir $BOOTFS
+
+#zip the image
+rm -f $DISKIMAGE.zip 2>/dev/null
+zip $DISKIMAGE.zip $DISKIMAGE
 
 # Creating stage file
 Create_stagefile .build/binary_rpi

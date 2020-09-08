@@ -14,7 +14,7 @@ if [[ " ${@} " =~ " build_rpi " ]]; then
     --hdd-partition-start 512MB 
     --bootstrap-qemu-arch armhf 
     --bootstrap-qemu-static /usr/bin/qemu-arm-static 
-    --bootappend-live "boot=live config hostname=pi username=pi"
+    --bootappend-live "boot=live config hostname=repeater username=repeater"
     --chroot-filesystem none 
     --firmware-binary false 
     --firmware-chroot false 

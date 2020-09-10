@@ -31,7 +31,6 @@ libfreetype6-dev
 dosfstools
 apt-listchanges
 usb-modeswitch
-libpam-chksshpwd
 libmtp-runtime
 rsync
 htop

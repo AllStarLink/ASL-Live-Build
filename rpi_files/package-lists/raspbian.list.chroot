@@ -25,3 +25,4 @@ libwbclient0:armhf
 raspberrypi-net-mods
 wireless-tools
 wpasupplicant
+libpam-chksshpwd

@@ -1,0 +1,3 @@
+#!/bin/bash
+
+sed -i 's/^%sudo.*$/%sudo\tALL=\(ALL:ALL\) NOPASSWD: ALL/g' /etc/sudoers

@@ -74,7 +74,7 @@ done
 
 for GRP in adm dialout cdrom audio users sudo video games plugdev input gpio spi i2c netdev; do
 
-  adduser pi "\$GRP"
+  adduser repeater "\$GRP"
 
 done
 

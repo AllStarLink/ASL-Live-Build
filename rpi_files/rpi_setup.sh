@@ -1,5 +1,13 @@
 #!/bin/bash
 
+echo ####################################
+echo #                                  #
+echo #                                  #
+echo #          rpi_setup.sh            #
+echo #                                  #
+echo #                                  #
+echo ####################################
+
 # Including common functions
 [ -e "${LIVE_BUILD}/scripts/build.sh" ] && . "${LIVE_BUILD}/scripts/build.sh" || . /usr/lib/live/build.sh
 
@@ -42,6 +50,9 @@ install -m 644 rpi_files/fstab $ROOTFS/etc
 install -m 644 rpi_files/hosts $ROOTFS/etc/hosts
 install -m 755 rpi_files/resize2fs_once $ROOTFS/etc/init.d
 
+mv $ROOTFS/etc/asterisk $ROOTFS/etc/asterisk.old
+cp -a asterisk $ROOTFS/etc/asterisk
+
 # Always enable SSH
 touch $BOOTFS/ssh
 
@@ -68,10 +79,10 @@ done
 
 systemctl enable regenerate_ssh_host_keys
 systemctl enable resize2fs_once
+systemctl disable hciuart.service
+systemctl disable bluealsa.service
+systemctl disable bluetooth.service
 EOT
-
-mv $ROOTFS/etc/asterisk $ROOTFS/etc/asterisk.old
-cp -a asterisk $ROOTFS/etc/asterisk
 
 chmod 755 $ROOTFS/setup.sh
 chroot $ROOTFS /setup.sh

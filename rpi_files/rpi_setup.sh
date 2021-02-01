@@ -64,6 +64,8 @@ sed -i "s/ROOTDEV/PARTUUID=${DISKUUID}-02/" "${BOOTFS}/cmdline.txt"
 sed -i "s/localhost\.localdomain/${HOST}/" "${ROOTFS}/etc/hostname"
 sed -i "s/localhost/${HOST}/" "${ROOTFS}/etc/hosts"
 
+cp rpi_files/asterisk.service $ROOTFS/etc/systemd/system
+
 cat <<EOT > $ROOTFS/setup.sh
 #!/bin/bash
 adduser --disabled-password --gecos "" repeater
@@ -79,6 +81,8 @@ done
 
 systemctl enable regenerate_ssh_host_keys
 systemctl enable resize2fs_once
+systemctl enable asterisk
+systemctl disable asl-asterisk
 systemctl disable hciuart.service
 systemctl disable bluealsa.service
 systemctl disable bluetooth.service

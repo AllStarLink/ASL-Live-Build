@@ -8,7 +8,8 @@ After=network-online.target
 [Service]
 Type=simple
 StandardOutput=null
-ExecStart=/usr/sbin/asterisk -g -f -C /etc/asterisk/asterisk.conf
+ExecStartPre=mkdir -p /run/asterisk
+ExecStart=/usr/sbin/asterisk -g -f
 ExecStop=/usr/sbin/asterisk -rx 'stop now'
 ExecReload=/usr/sbin/asterisk -rx 'module reload'
 

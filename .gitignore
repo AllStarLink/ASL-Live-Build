@@ -11,6 +11,9 @@ build.log
 
 cache/
 
+bootfs
+rootfs
+
 chroot/
 chroot.packages.*
 

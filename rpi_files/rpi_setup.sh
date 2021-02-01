@@ -6,8 +6,6 @@
 # Checking stage file
 Check_stagefile .build/binary_rpi
 
-
-
 DISKIMAGE="$(cat config/build | grep ^Name:.*rpi | sed 's/^Name: \(.*\)$/\1/g')-armhf.img"
 
 OFFSET=$(expr $(fdisk -u -l $DISKIMAGE | sed -ne "s|^${DISKIMAGE}1[ *]*\([0-9]*\).*|\1|p") '*' 512)
@@ -28,28 +26,26 @@ mkdosfs -n boot -F 32 -v $DEVB
 DISKUUID="$(dd if=$DISKIMAGE skip=440 bs=1 count=4 2>/dev/null | xxd -e | cut -f 2 -d' ')"
 
 
-
 ROOTFS=rootfs
 BOOTFS=bootfs
 
-mkdir $ROOTFS
-mkdir $BOOTFS
+mkdir $ROOTFS || true
+mkdir $BOOTFS || true
 
 mount $DEVR $ROOTFS
 mount $DEVB $BOOTFS
 
-
 mv $ROOTFS/boot/* $BOOTFS
-
-
 
 install -m 644 rpi_files/config.txt $BOOTFS
 install -m 644 rpi_files/cmdline.txt $BOOTFS
 install -m 644 rpi_files/fstab $ROOTFS/etc
 install -m 644 rpi_files/hosts $ROOTFS/etc/hosts
 install -m 755 rpi_files/resize2fs_once $ROOTFS/etc/init.d
-touch $BOOTFS/ssh
+install -m 755 rpi_files/check_for_wpa_supplicant $ROOTFS/etc/init.d
 
+# Always enable SSH
+touch $BOOTFS/ssh
 
 HOST=repeater
 
@@ -60,34 +56,36 @@ sed -i "s/localhost\.localdomain/${HOST}/" "${ROOTFS}/etc/hostname"
 sed -i "s/localhost/${HOST}/" "${ROOTFS}/etc/hosts"
 
 
-
-
-chroot $ROOTFS << EOT
+cat <<EOT > $ROOTFS/setup.sh
+#!/bin/bash
 adduser --disabled-password --gecos "" repeater
 echo "repeater:allstarlink" | chpasswd
 
 for GRP in input spi i2c gpio; do
-
 	groupadd -f -r "\$GRP"
-
 done
 
 for GRP in adm dialout cdrom audio users sudo video games plugdev input gpio spi i2c netdev; do
-
   adduser repeater "\$GRP"
-
 done
 
 systemctl enable regenerate_ssh_host_keys
 systemctl enable resize2fs_once
+systemctl enable check_for_wpa_supplicant
 EOT
+
+chmod 755 $ROOTFS/setup.sh
+chroot $ROOTFS /setup.sh
+rm $ROOTFS/setup.sh
 
 umount $ROOTFS
 umount $BOOTFS
+
 losetup -d $DEVR
 losetup -d $DEVB
-rmdir $ROOTFS
-rmdir $BOOTFS
+
+rmdir $ROOTFS || true
+rmdir $BOOTFS || true
 
 #zip the image
 rm -f $DISKIMAGE.zip 2>/dev/null

@@ -16,6 +16,7 @@ cat <<EOT > $ROOTFS/setup.sh
 #!/bin/bash
 systemctl disable asl-asterisk
 systemctl enable asterisk
+apt -y remove auto-apt-proxy
 sed -i 's/https:\/\/kc1kcc\.com/http:\/\/apt\.allstarlink\.org/g' /etc/apt/sources.list.d/live.list
 EOT
 

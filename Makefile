@@ -3,7 +3,8 @@ NAME = ASL-Live-Build
 
 clean:
 	lb clean
-	mkdir chroot/etc || true
+	rm -rf rootfs bootfs
+	mkdir -p chroot/etc || true
 config:
 	lb config
 configpi:

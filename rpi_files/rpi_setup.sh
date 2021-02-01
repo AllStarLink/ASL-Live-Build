@@ -20,7 +20,6 @@ losetup -o 4194304 --sizelimit $(expr $OFFSET '-' 4194304) $DEVB $DISKIMAGE
 DEVR=$(losetup -f)
 losetup -o $OFFSET $DEVR $DISKIMAGE
 
-
 mkdosfs -n boot -F 32 -v $DEVB
 
 DISKUUID="$(dd if=$DISKIMAGE skip=440 bs=1 count=4 2>/dev/null | xxd -e | cut -f 2 -d' ')"

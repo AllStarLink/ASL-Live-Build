@@ -2,15 +2,16 @@ NAME = ASL-Live-Build
 .PHONY: buildpi
 
 clean:
-	lb clean
-	rm -rf rootfs bootfs
-	mkdir -p chroot/etc || true
+	sudo lb clean
+	sudo rm -rf rootfs bootfs
+	sudo mkdir -p chroot/etc
+	sudo lb clean
 config:
-	lb config
+	sudo lb config
 configpi:
-	lb config build_rpi
+	sudo lb config build_rpi
 pi: clean configpi build
 pc: clean config build 
 build:
-	lb build
+	sudo lb build
 

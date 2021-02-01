@@ -7,13 +7,11 @@ if [[ " ${@} " =~ " build_rpi " ]]; then
   args=( ${@/build_rpi} )
   OPTIONS+=(
     --architectures armhf 
-    --image-name asl-beta-kc1kcc-rpi-$(date +"%m%d%y")
+    --image-name asl-beta-2.0.0-beta.1-kc1kcc-rpi-$(date +"%m%d%y")
     --binary-images hdd 
     --binary-filesystem ext4 
     --hdd-size 4096
     --hdd-partition-start 512MB 
-    --bootstrap-qemu-arch armhf 
-    --bootstrap-qemu-static /usr/bin/qemu-arm-static 
     --bootappend-live "boot=live config hostname=repeater username=repeater"
     --chroot-filesystem none 
     --firmware-binary false 
@@ -27,13 +25,23 @@ if [[ " ${@} " =~ " build_rpi " ]]; then
     --system normal 
     --updates false 
     --security false)
+
+  PLATFORM=`uname -m` 
+
+  if [[ "${PLATFORM}" != "armv7l" ]]; then
+      OPTIONS+=(
+    --bootstrap-qemu-arch armhf 
+    --bootstrap-qemu-static /usr/bin/qemu-arm-static 
+    )
+  fi
+
   cp -a rpi_files/archives/* config/archives
   cp -a rpi_files/package-lists/* config/package-lists
 else
     args=${@}
     OPTIONS+=(
     --architectures amd64
-    --image-name asl-beta-kc1kcc-liveinstaller-$(date +"%m%d%y")
+    --image-name asl-2.0.0-beta.1-kc1kcc-x86-$(date +"%m%d%y")
     --debootstrap-options "--keyring ./debian-archive-buster-stable.gpg --include=ca-certificates"
     --binary-images iso
     --debian-installer live

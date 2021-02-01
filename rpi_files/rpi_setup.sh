@@ -11,38 +11,11 @@ echo ####################################
 # Including common functions
 [ -e "${LIVE_BUILD}/scripts/build.sh" ] && . "${LIVE_BUILD}/scripts/build.sh" || . /usr/lib/live/build.sh
 
+# ASL Functions
+. scripts/functions.sh
+
 # Checking stage file
 Check_stagefile .build/binary_rpi
-
-DISKIMAGE="$(cat config/build | grep ^Name:.*rpi | sed 's/^Name: \(.*\)$/\1/g')-armhf.img"
-
-OFFSET=$(expr $(fdisk -u -l $DISKIMAGE | sed -ne "s|^${DISKIMAGE}1[ *]*\([0-9]*\).*|\1|p") '*' 512)
-OFFSETm1=$(expr $OFFSET '-' 1)
-
-parted -s $DISKIMAGE rm 1
-parted -s $DISKIMAGE unit B mkpart primary fat32 4194304 $OFFSETm1
-parted -s $DISKIMAGE unit B mkpart primary ext4 $OFFSET 100%
-
-DEVB=$(losetup -f)
-losetup -o 4194304 --sizelimit $(expr $OFFSET '-' 4194304) $DEVB $DISKIMAGE
-DEVR=$(losetup -f)
-losetup -o $OFFSET $DEVR $DISKIMAGE
-
-mkdosfs -n boot -F 32 -v $DEVB
-
-DISKUUID="$(dd if=$DISKIMAGE skip=440 bs=1 count=4 2>/dev/null | xxd -e | cut -f 2 -d' ')"
-
-
-ROOTFS=rootfs
-BOOTFS=bootfs
-
-mkdir $ROOTFS || true
-mkdir $BOOTFS || true
-
-mount $DEVR $ROOTFS
-mount $DEVB $BOOTFS
-
-mv $ROOTFS/boot/* $BOOTFS
 
 install -m 644 rpi_files/config.txt $BOOTFS
 install -m 644 rpi_files/cmdline.txt $BOOTFS
@@ -57,6 +30,8 @@ cp -a asterisk $ROOTFS/etc/asterisk
 touch $BOOTFS/ssh
 
 HOST=repeater
+
+openDiskImage
 
 sed -i "s/BOOTDEV/PARTUUID=${DISKUUID}-01/" "${ROOTFS}/etc/fstab"
 sed -i "s/ROOTDEV/PARTUUID=${DISKUUID}-02/" "${ROOTFS}/etc/fstab"
@@ -92,14 +67,7 @@ chmod 755 $ROOTFS/setup.sh
 chroot $ROOTFS /setup.sh
 rm $ROOTFS/setup.sh
 
-umount $ROOTFS
-umount $BOOTFS
-
-losetup -d $DEVR
-losetup -d $DEVB
-
-rmdir $ROOTFS || true
-rmdir $BOOTFS || true
+closeDiskImage
 
 #zip the image
 rm -f $DISKIMAGE.zip 2>/dev/null

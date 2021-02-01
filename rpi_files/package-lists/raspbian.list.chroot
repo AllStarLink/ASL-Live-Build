@@ -26,3 +26,4 @@ raspberrypi-net-mods
 wireless-tools
 wpasupplicant
 libpam-chksshpwd
+vim

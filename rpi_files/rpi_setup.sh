@@ -42,7 +42,6 @@ install -m 644 rpi_files/cmdline.txt $BOOTFS
 install -m 644 rpi_files/fstab $ROOTFS/etc
 install -m 644 rpi_files/hosts $ROOTFS/etc/hosts
 install -m 755 rpi_files/resize2fs_once $ROOTFS/etc/init.d
-install -m 755 rpi_files/check_for_wpa_supplicant $ROOTFS/etc/init.d
 
 # Always enable SSH
 touch $BOOTFS/ssh
@@ -71,7 +70,6 @@ done
 
 systemctl enable regenerate_ssh_host_keys
 systemctl enable resize2fs_once
-systemctl enable check_for_wpa_supplicant
 EOT
 
 chmod 755 $ROOTFS/setup.sh

@@ -44,3 +44,4 @@ pciutils
 dhcpcd5
 netbase
 freetype2-doc
+auto-apt-proxy

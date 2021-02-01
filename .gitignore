@@ -16,6 +16,9 @@ rootfs
 
 chroot/
 chroot.packages.*
+chroot.files
+asl-*.img*
+asl-*.contents*
 
 config/build
 

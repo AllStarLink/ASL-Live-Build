@@ -30,7 +30,7 @@ openDiskImage() {
     mv $ROOTFS/boot/* $BOOTFS
 }
 
-function closeDiskImage()
+closeDiskImage()
 {
     umount $ROOTFS
     umount $BOOTFS

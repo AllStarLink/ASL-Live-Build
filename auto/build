@@ -6,6 +6,7 @@ lb build noauto "${@}" 2>&1 | tee build.log
 
 . ./scripts/functions.sh
 
+# RPi Only
 if [ -f "$(cat config/build | grep ^Name:.*rpi | sed 's/^Name: \(.*\)$/\1/g')-armhf.img" ]; then
     PLATFORM="armhf"
 
@@ -15,7 +16,7 @@ if [ -f "$(cat config/build | grep ^Name:.*rpi | sed 's/^Name: \(.*\)$/\1/g')-ar
         ./rpi_files/rpi_setup.sh
     fi
 
-    ./scripts/post_build.sh
+    ./scripts/rpi_post_build.sh
 
     closeDiskImage
 fi

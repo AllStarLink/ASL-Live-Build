@@ -14,7 +14,7 @@ echo ####################################
 # Checking stage file
 Check_stagefile .build/binary_rpi
 
-DISKIMAGE="$(cat config/build | grep ^Name:.* | sed 's/^Name: \(.*\)$/\1/g')-${1}.img"
+DISKIMAGE="$(cat config/build | grep ^Name:.* | sed 's/^Name: \(.*\)$/\1/g')-armhf.img"
 OFFSET=$(expr $(fdisk -u -l $DISKIMAGE | sed -ne "s|^${DISKIMAGE}1[ *]*\([0-9]*\).*|\1|p") '*' 512)
 OFFSETm1=$(expr $OFFSET '-' 1)
 

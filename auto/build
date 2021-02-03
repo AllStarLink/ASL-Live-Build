@@ -8,11 +8,11 @@ lb build noauto "${@}" 2>&1 | tee build.log
 
 
 if [ -f "$(cat config/build | grep ^Name:.*rpi | sed 's/^Name: \(.*\)$/\1/g')-armhf.img" ]; then
-    PLATFORM="pi"
+    PLATFORM="armhf"
 
     openDiskImage $PLATFORM
 
-    if [[ "${PLATFORM}" == "rpi" ]]; then
+    if [ "${PLATFORM}" = "armhf" ]; then
         ./rpi_files/rpi_setup.sh
     fi
 

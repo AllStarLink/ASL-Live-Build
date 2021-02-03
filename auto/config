@@ -7,7 +7,7 @@ if [[ " ${@} " =~ " build_rpi " ]]; then
   args=( ${@/build_rpi} )
   OPTIONS+=(
     --architectures armhf 
-    --image-name asl-beta-2.0.0-beta.1-kc1kcc-rpi-$(date +"%m%d%y")
+    --image-name asl-beta-2.0.0-beta.1-kc1kcc-$(date +"%m%d%y")-rpi
     --binary-images hdd 
     --binary-filesystem ext4 
     --hdd-size 4096

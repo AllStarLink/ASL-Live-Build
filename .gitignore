@@ -20,6 +20,8 @@ chroot.packages.*
 chroot.files
 asl-*.img*
 asl-*.contents*
+asl-*amd64*
+
 
 config/build
 

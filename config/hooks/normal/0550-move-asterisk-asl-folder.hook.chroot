@@ -1,0 +1,5 @@
+#!/bin/bash
+
+rm -rf /etc/asterisk 
+mv /etc/asterisk.asl /etc/asterisk
+

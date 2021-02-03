@@ -7,11 +7,6 @@ echo #                                  #
 echo #                                  #
 echo ####################################
 
-mv $ROOTFS/etc/asterisk $ROOTFS/etc/asterisk.old
-cp -a asterisk $ROOTFS/etc/asterisk
-
-cp scripts/asterisk.service $ROOTFS/etc/systemd/system
-
 cat <<EOT > $ROOTFS/setup.sh
 #!/bin/bash
 systemctl disable asl-asterisk

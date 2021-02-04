@@ -1,0 +1,35 @@
+<style type="text/css">
+
+html { 
+	background-color: powderblue;
+	color: black 
+	font-size: 12px;
+	font-family: Verdana;
+	text-align: left;
+}
+
+body {
+	background-color: powderblue;
+	color: black
+	font-size: 12px;
+        font-family: Verdana;
+        text-align: left;
+}
+
+table {
+	background-color: powderblue;
+	color: black;
+	font-size: 14px;
+	padding: 2px;
+	margin: 2px;
+	border-style: groove;
+	border-width: 0px;
+	font-family: Verdana;
+}	
+	
+.even-row {
+        background : #00FFFF;
+}
+.odd-row {
+        background : #00E8E8;
+}

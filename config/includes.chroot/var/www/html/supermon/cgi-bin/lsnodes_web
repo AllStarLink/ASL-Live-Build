@@ -1,0 +1,325 @@
+#!/usr/bin/perl
+#
+#  This is the server side code to display Allstar stuff to a client
+#  side web based sever. This works best with Firefox, also works with 
+#  Chrome. See documentation for implementation
+#  and use instructions.
+#
+#  Feel free to change this for your particular application. There
+#  are many ways to do this and this is just one example of how to 
+#  access and command Allstar.
+#
+#  See my web page - www.hamvoip.org for more info.
+#
+#  Copyright WA3DSP, 2013, 2014, 2015, 2016, 2017, 2018
+#
+#  Jan 18, 2014 - Updated to Display EchoLink Calls  v1.01
+#
+#  Jan 31, 2016 - Update to allow simple command selection in form
+#                 calling  lsnodes_form.php
+#                 Limit search to exact match
+#
+#  Oct 2018     - Fixed direct connect '*' notation
+#		  Added host name to registration window
+#
+#  Apr 27, 2019 - Paul Aidukas/KN2R, included IRLP info support.
+#
+#######################################################################
+  
+#use strict;
+#use warnings;
+#
+#require "timelocal.pl";
+use List::Util 'first';
+use Scalar::Util qw(looks_like_number);
+use CGI::Carp qw(warningsToBrowser fatalsToBrowser);
+#
+#use Term::ANSIScreen qw(cls);
+#
+use CGI qw(:cgi-lib :standard);
+&ReadParse(%in);
+my $node = $in{"node"};       
+my $command = $in{"command"};
+#
+# Specify the location of SuperMon web directory
+my $allmondir = "/var/www/html/supermon";
+#
+#my $node = $ARGV[0];  # used for test purposes when run from console
+#
+# Specify the location of the Allstar database
+#
+my $allstardb = "/var/log/asterisk/astdb.txt";
+#
+my $get_connected_nodes = "sudo /usr/sbin/asterisk -rx \"rpt nodes $node\"";
+my $get_node_status = "sudo /usr/sbin/asterisk -rx \"rpt stats $node\"";
+my $get_my_ip = "/usr/bin/curl -s icanhazip.com";
+my $get_node_lstatus = "sudo /usr/sbin/asterisk -rx \"rpt lstats $node\"";
+my $get_iax_registry = "sudo /usr/sbin/asterisk -rx \"iax2 show registry\"";
+#
+my $get_irlp_status = "/bin/cat /usr/local/etc/allstar.env |egrep -c ^'export IRLP'";
+my $irlp_active_file = "/var/log/irlp/local/active";
+if (-e $irlp_active_file) {
+    my $get_irlp_node = "/bin/cat $irlp_active_file";
+}
+#select (STDOUT);
+#$| =1;
+#select (STDERR);
+#$| = 1;
+#
+$ENV{TERM}='dumb';
+#
+my $IRLP_TEST=`$get_irlp_status`;
+#
+(my $sec,my $min,my $hour,my $mday,my $mon,my $year,my $wday,my $yday,my $isdst) = localtime();
+#
+#  Check for command entry
+if ($command ne "") {
+   my $rpt_command = "sudo /usr/sbin/asterisk -rx \"rpt fun $node $command\"";
+   `$rpt_command`;
+}
+# 
+# Open and prepare database
+my ($var1,$var2,$var3,$var4,$var5,$var6)="";
+open (ASTDB,$allstardb);
+my @list = <ASTDB>;
+my $match = first { /^$node\|/ } @list;
+my @nodelist=split(/\|/, $match);
+($var1,$var2,$var3,$var4)=@nodelist;
+chomp($var4);
+#
+# ------------- Get IAX2 Registry ----------------------
+my $iax_register = `$get_iax_registry`;
+$iax_register =~  s/^(?:.*\n){1,1}//;      # Remove first line
+$iax_register =~ s/ +/ /g;                 # Replace multiple space with single space
+$iax_register =~ s/\n/ /g;
+my @iax_register_array = split (/ /,$iax_register);
+
+# ----------- Get node lstat example -------------------
+my $node_lstatus = `$get_node_lstatus`;
+$node_lstatus =~ s/^(?:.*\n){1,2}//;        # Remove first two lines
+#
+if (-e $irlp_active_file) {
+    my $irlp_node = `$get_irlp_node`;
+}
+chomp($irlp_node);
+$irlp_node =~ s/ref//;
+$irlp_node =~ s/stn//;
+$node_lstatus =~ s/^3(.*)\n//g;             # Remove EchoLink nodes from $node_lstatus
+$node_lstatus =~ s/\n3(.*)\n//g;            # Remove EchoLink nodes from $node_lstatus
+$node_lstatus =~ s/^8(.*)\n//g;             # Remove IRLP nodes from $node_lstatus
+$node_lstatus =~ s/\n8(.*)\n//g;            # Remove IRLP nodes from $node_lstatus
+#
+$node_lstatus =~ s/ +/ /g;                  # Replace multiple space with single space
+$node_lstatus =~ s/\n//g;
+my @lstat_array = split (/ /,$node_lstatus);
+
+# -----------  Get nodes status example -----------------
+#
+my $node_status = `$get_node_status`;
+$node_status =~  s/^(?:.*\n){1,2}//;       #  Remove first two lines
+$node_status =~  s/\.//g;                  #  Remove all .
+$node_status =~ s/\n/&/g;                  #  Replace all \n with &
+$node_status =~  s/: /&/g;                 #  Replace all : with &
+$node_status =~ s/,//g;
+my @stat_array = split (/&/,$node_status); #  Split on &
+
+# --------------------------------------------------------
+#
+#   Print web page
+print"Content-type: text/html\n\n";
+print"<html><head>";
+#
+#   Set refresh time
+if (index($command,"*") == -1) {
+    $delay = 60;
+} else {
+    $delay = 5;
+}  
+print"<meta http-equiv=\"refresh\" content=\"$delay;http://$ENV{HTTP_HOST}/cgi-bin/lsnodes_web?node=$node\">";
+#
+#print"<meta http-equiv=\"refresh\" content=\"$delay;http://$ENV{HTTP_HOST}:$ENV{SERVER_PORT}/cgi-bin/lsnodes_web?node=$node\">";
+#
+#
+print<<EOSTUFF;
+<title>Allstar Connected Nodes and Status</title>
+<STYLE type="text/css">
+table.status { font-size:.6em; fgcolor: black; font-family: Verdana, Arial, Helvetica, sans-serif; margin-left:0; margin-right:3%; margin-bottom:2%; border: 1px solid black; padding: .6em; }
+table.nodes {font-size:.6em; fgcolor: black; font-family: Verdana, Arial, Helvetica, sans-serif; margin-bottom:2%; border: 1px solid black; padding: .6em; }
+th { text-align:left; fgcolor: black; font-weight: bold; height:1.4em; font-size:1.0em; text-decoration:underline; }
+div.clear {clear:both;}
+div.main { width: 99%; margin: 0 auto; }
+div.left { position:absolute; top:90; left:10; width:45%; font-family: Verdana, Arial, Helvetica, sans-serif;font-family: Verdana, Arial, Helvetica, sans-serif; }
+div.right { position:absolute; top:90; left:460; width:55%; height:85%; overflow:auto; }
+div.status { width 45%; position:relative; }
+div.header { width 99%; }
+div.footer { width 99%; }
+p.header {font-size:1.1em; fgcolor: black; font-family: Verdana, Arial, Helvetica, sans-serif; margin:0; text-align:center; }
+p.header2 {font-size:.7em; fgcolor: black; font-family: Verdana, Arial, Helvetica, sans-serif; margin:0; text-align:center; }
+</STYLE>
+</head>
+<body>
+<div id="container" class="main">
+<div id="header" class="header">
+EOSTUFF
+#
+#   Print page header
+print "<p class=\"header\">Status for $var2 - Node $node</h2></p>";
+print "<p class=\"header2\">Last update - ";
+printf("%02d/%02d/%4d %02d:%02d:%02d\n", $mon+1,$mday,$year+1900,$hour, $min, $sec);
+my $ip = `$get_my_ip`;
+print " &nbsp; &nbsp; My IP - $ip</p>";
+print "<p class=\"header2\" style=\"margin-top:.5em;\"></center>";
+if ($command ne "") {
+  print "Command = ",$command," - ";
+}
+print "<a href=\"http://stats.allstarlink.org/getstatus.cgi?$node\">View this Node Graphically</a>&nbsp;&nbsp;&nbsp;<a href=\"/lsnodes/lsnodes_form.php?node=$node\">Search/Command another Node</a></p></div>";
+#
+#  Print display tables
+print "<div id=\"left_table\" class=\"left\">";
+print "<table class=\"status\" style=\"float:left\" cellspacing=\"0\" cellpadding=\"0\" width=\"440\" fgcolor=\"black\" bgcolor=\"powderblue\">";
+
+for ($i=0 ; $i <= $#stat_array ; $i=$i+2) {
+#print $stat_array[$i]," = ",$stat_array[$i+1],"\n";
+   print "<tr><td>$stat_array[$i]</td><td>$stat_array[$i+1]</td></tr>";
+}
+
+print "</table></div>";
+print "<div id=\"right\" class=\"right\">";
+print " <table class=\"nodes\" cellspacing=\"0\" cellpadding=\"0\" width=\"680\">";
+print "<tr fgcolor=\"black\" bgcolor=\"lightblue\"><th>Node</th><th>Call</th><th>Description</th><th>Location</th></tr>";
+
+print "<tr fgcolor=\"black\" bgcolor=\"#FF90AF\"><td>$var1</td><td>$var2</td><td>$var3</td><td>$var4</td></tr>";
+
+my $nodes_connected = `$get_connected_nodes`;
+
+$nodes_connected =~  s/^(?:.*\n){1,3}//;    # Remove first 3 lines
+$nodes_connected =~ s/,/ /g;                # Replace , with space
+$nodes_connected =~ s/\n/ /g;               # Replace newlines with space
+$nodes_connected =~ s/ +/ /g;               # Replace multiple space with single space
+
+my $direct_connect="";
+for ($i=0 ; $i <= $#lstat_array ; $i=$i+6) {
+$direct_connect .= $lstat_array[$i];
+$direct_connect .= " ";
+}
+
+my @array = split (/ /,$nodes_connected);
+my $count = 1;
+foreach my $nodenum (@array) {
+   $nodenum = substr($nodenum,1,10);
+   if (looks_like_number($nodenum)) {
+        if ($nodenum >= 100000) {
+           $nodenum = int(substr($nodenum,1,10));
+           my $get_echo_call = "sudo /usr/sbin/asterisk -rx \"echolink dbget n $nodenum\"";
+           $echo_data = `$get_echo_call`;
+           my @echo_array = split (/\|/, $echo_data);
+           ($n,$c,$i) = @echo_array;
+           if ($c eq "") {
+              $c = "No-Info";
+           }
+           $nodenumR = $nodenum;
+           if (index($stat_array[43],$nodenum) != -1) {
+               $nodenumR = $nodenum . "*";
+           }
+           print "<tr fgcolor=\"black\" bgcolor=\"lightgreen\"><td>$nodenumR</td><td>$c</td><td>EchoLink</td><td>-----</td></tr>";
+
+        # IRLP information - Paul Aidukas KN2R - 2014:
+        } elsif ($nodenum >= 80000 && $nodenum < 90000) {
+           $nodenumR = $nodenum;
+           $nodenum = substr($nodenum,1,10);
+           if ($IRLP_TEST > 0) {
+              $IRLP="enabled";
+           }
+           if ($IRLP eq "enabled") {
+              chomp($IRCall=`cat /var/log/irlp/vutil_calls |grep -e ^"$nodenum," |cut -d "," -f2`);
+              chomp($IRLoc=`cat /var/log/irlp/vutil_calls |grep -e ^"$nodenum," |cut -d "~" -f3-5 |sed 's/~/, /g'`);
+           }
+           if ($nodenum < 1000) {
+              $IRDesc="IRLP Experimental $nodenum";
+           }
+           if ($nodenum >= 1000 && $nodenum <= 8999) {
+              $IRDesc="IRLP Node $nodenum";
+           }
+           if ($nodenum >= 9000) {
+              $nodenum2 = substr($nodenum,0,3) . "0";
+              if ($IRCall eq "") { $IRCall="REF$nodenum" }
+              if ($IRLP eq "enabled") {
+                 chomp($IRDesc=`cat /var/log/irlp/vutil_calls |grep -e ^"$nodenum2," |cut -d "~" -f3 |sed 's/~/, /g'`);
+              }
+              if ($IRDesc eq "") { $IRDesc="Reflector $nodenum" }
+              $IRDesc="IRLP $IRDesc";
+              if ($IRLP eq "enabled") {
+                 chomp($IRLoc=`cat /var/log/irlp/vutil_calls |grep -e ^"$nodenum2," |cut -d "~" -f4-5 |sed 's/~/, /g'`);
+              }
+           }
+           if (index($stat_array[43],$nodenum) != -1) {
+               $nodenumR = $nodenum . "*";
+           } elsif (index($direct_connect,$nodenum) != -1) {
+               $nodenumR = $nodenum . "*";
+           } else {
+               $nodenumR = $nodenum;
+           }
+           print "<tr fgcolor=\"black\" bgcolor=\"cyan\"><td>$nodenumR</td><td>$IRCall</td><td>$IRDesc</td><td>$IRLoc</td></tr>";
+
+        } else {
+
+          my $match = first { /^$nodenum\|/ } @list;
+          @nodelist=split(/\|/, $match);
+          ($var1,$var2,$var3,$var4)=@nodelist;
+          chomp($var4);
+          # if (index($stat_array[43],$nodenum) != -1) {
+          if (index($direct_connect,$nodenum) != -1) {
+              $var1 = $var1 . "*";
+          }  
+          if ($match=="") {
+             print "<tr fgcolor=\"black\" bgcolor=\"yellow\"><td>$nodenum</td><td>No-Info</td><td>Node not in database</td><td>-----</td></tr>";
+          } else {
+             print "<tr fgcolor=\"black\" bgcolor=\"yellow\"><td>$var1</td><td>$var2</td><td>$var3</td><td>$var4</td></tr>";
+          }
+        }
+      } elsif ($nodenum !~ /NONE/) {
+          $var1="User";
+          # if (index($stat_array[43],$nodenum) != -1) {
+          if (index($direct_connect,$nodenum) != -1) {
+          $var1 = $var1 . "*";
+          print "<tr fgcolor=\"black\" bgcolor=\"lightgray\"><td>$var1</td><td>$nodenum</td><td>IaxRpt, Web Txcvr, or Phone Portal</td><td>-----</td><td>";
+      } else {
+          print "<tr fgcolor=\"black\" bgcolor=\"lightgray\"><td>$var1</td><td>$nodenum</td><td>IaxRpt, Web Txcvr, or Phone Portal</td><td>-----</td><td>";
+      }
+    }
+}
+print "</tr></table>";
+
+print "<table class=\"nodes\" cellspacing=\"0\" cellpadding=\"0\" width=\"680\" fgcolor=\"black\" bgcolor=\"#00BFFF\">";
+print "<tr><th>Node</th><th>Peer</th><th>Reconnects</th><th>Direction</th><th>Connect Time</th><th>Connect State</th></tr>";
+
+for ($i=0 ; $i <= $#lstat_array ; $i=$i+6) {
+   print "<tr><td>$lstat_array[$i]</td><td>$lstat_array[$i+1]</td><td>$lstat_array[$i+2]</td><td>$lstat_array[$i+3]</td><td>$lstat_array[$i+4]</td><td>$lstat_array[$i+5]</td></tr>";
+}
+print "</tr></table>";
+
+print "<table class=\"nodes\"  cellspacing=\"0\" cellpadding=\"0\" width=\"680\" fgcolor=\"black\" bgcolor=\"#F0E68C\">";
+print "<tr><th>Registry <i> IP:Port</i></th><th>Registry <i>Host FQDN</i></th><th>(Group/)Node(#Port)</th><th>State</th></tr>";
+
+for ($i=0 ; $i <= $#iax_register_array ; $i=$i+6) {
+my $reg_ip = $iax_register_array[$i];
+$reg_ip =~ s/\:.*//;
+my $reg_host = `/usr/bin/dig +short -x $reg_ip`;
+chomp($reg_host);
+$reg_host =~ s/^[^\n]*\n//g;
+print "<tr><td>$iax_register_array[$i]</td><td>$reg_host</td><td>$iax_register_array[$i+2]</td><td>$iax_register_array[$i+5]</td></tr>";
+}
+
+print "</table>";
+print "<div class=\"clear\">";
+print "</div>";
+print<<EOF;
+</div></div>
+</body>
+</html>
+EOF
+
+sub ltrim { my $s = shift; $s =~ s/^\s+//; return $s };
+sub rtrim { my $s = shift; $s =~ s/\s+$//; return $s };
+sub trim { my $s = shift; $s =~ s/^\s+|\s+$//g; return $s };
+

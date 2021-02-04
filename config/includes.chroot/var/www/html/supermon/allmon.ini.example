@@ -1,0 +1,76 @@
+
+[1998]
+host=127.0.0.1:5038
+user=admin
+passwd=wa3dsp
+menu=yes
+hideNodeURL=no
+
+[1999]
+host=127.0.0.1:5038
+user=admin
+passwd=wa3dsp
+menu=yes
+hideNodeURL=no
+
+[All Nodes]
+nodes=1998,1999
+menu=yes
+
+[lsNodes]
+url="/cgi-bin/lsnodes_web?node=1998"
+
+[IRLP Status]
+url="http://status.irlp.net"
+
+[HAMVOIP]
+url="http://HamVOIP.org"
+
+[Off-site Link]
+url=http://google.com
+
+[1500]
+host=127.0.0.1:5038
+user=admin
+passwd=password2
+menu=yes
+hideNodeURL=yes
+
+[1501]
+system=System1
+host=127.0.0.1:5038
+user=admin
+passwd=password2
+menu=yes
+hideNodeURL=yes
+
+[1502]
+system=System1
+host=127.0.0.1:5038
+user=admin
+passwd=password2
+menu=yes
+hideNodeURL=yes
+
+[2000]
+system=System2
+host=my.address.com:5037
+user=admin
+passwd=password2
+menu=yes
+
+[2000 RTCM]
+system=System2
+rtcmnode=2000
+menu=yes
+
+[Grouped Nodes]
+nodes=500,501,2000
+menu=yes
+
+[2 RTCMs]
+system=System2
+rtcmnode=2000,2001
+menu=yes
+
+

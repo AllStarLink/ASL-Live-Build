@@ -1,0 +1,424 @@
+.nodeNum {
+    margin: 5px;
+    cursor: pointer;
+}
+
+.nodeNum:hover {
+    font-weight: bold;
+    color: black;
+}
+
+#bubblechart {
+    font-size: 9.5px;
+}
+
+#lsnodeschart {
+    font-size: 9.5px;
+}
+
+#header {
+    width: 100%;
+    position: relative;
+    margin: 1px 0px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+/* Background definitions are in global.inc - Do not change here */
+/*    background-color: blue; */
+/*    background-image: url("background.jpg"); */
+/*    height: 124px; */
+}
+
+#headerTitle {
+    position: absolute;
+    top: 8px;
+    left: 10px;
+    margin: 0px 0px;
+    font-weight: bold;
+    font-size: 1.1em;
+    color: white;
+    line-height: normal;
+    letter-spacing: normal;
+    font-family: "Lucida Grande", Lucida, Verdana, sans-serif;
+}
+
+#headerTitle a:link {
+    text-decoration: none;
+    color: white;
+}
+
+#headerTitle a:visited {
+    text-decoration: none;
+    color: white;
+}
+
+#headerTag {
+    position: absolute;
+    top: 58px;
+    left: 10px;
+    margin: 0px 0px;
+    color: white;
+    font-weight: bold;
+    font-size: 0.9em;
+    line-height: normal;
+    font-family: "Lucida Grande", Lucida, Verdana, sans-serif;
+    letter-spacing: normal;
+}
+
+#header2Tag {
+    position: absolute;
+    top: 103px;
+    left: 10px;
+    margin: 0px 0px;
+    font-size: 0.9em;
+    color: cyan;
+    font-weight: bold;
+    line-height: normal;
+    font-family: "Lucida Grande", Lucida, Verdana, sans-serif;
+    letter-spacing: normal;
+}
+
+#header3Tag {
+    position: absolute;
+    top: 54px;
+    left: 10px;
+    margin: 0px 0px;
+    font-size: 1.3em;
+    color: lightgreen;
+    font-weight: bold;
+    line-height: normal;
+    font-family: "Lucida Grande", Lucida, Verdana, sans-serif;
+    letter-spacing: normal;
+}
+
+#header4Tag {
+    position: absolute;
+    top: 54px;
+    left: 10px;
+    margin: 0px 0px;
+    font-size: 1.3em;
+    color: yellow;
+    font-weight: bold;
+    line-height: normal;
+    font-family: "Lucida Grande", Lucida, Verdana, sans-serif;
+    letter-spacing: normal;
+}
+
+#headerImg {
+    position: absolute;
+    top: 2px;
+    right: 12px;
+}
+
+#headerLogin {
+    position: absolute;
+    top: 36px;
+    left: 11px;
+    font-size: 14px;
+    font-family: Verdana,Arial,sans-serif;
+    color: lightgray;
+}
+
+#headerLogin a:link {
+    text-decoration: none;
+    color: lightgray;    
+}
+
+#headerLogin a:visited {
+    text-decoration: none;
+    color: lightgray;
+}
+
+#headerLogin a:hover {
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    color: yellow;
+}
+
+#menu {
+    position: relative;
+    width: 100%;
+    float: left;
+    padding: 0px 0px 0px 12px;
+    box-sizing: border-box;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    background-color: darkblue;
+    font-size: 15px;
+    font-family: Verdana,Arial,sans-serif;
+}
+
+#menu a {
+    display: block;
+    padding: 2px 8px 2px 2px;
+    text-decoration: none;
+    color: yellow;
+}
+
+#menu a:hover {
+    background: transparent;
+    font-weight: bold;
+}
+
+#menu a:active {
+}
+
+#menu a.active {
+    color: white;
+}
+
+#menu ul {
+    list-style-type: none;
+    margin: 0;
+    float: left;
+    padding: 1px 8px 2px 3px;
+    background-color: darkblue;
+}
+
+#menu li {
+    float: left;
+}
+
+#menu li a, .dropbtn {
+    display: inline-block;
+    /** color: white; **/
+    text-align: center;
+    /** padding: 14px 16px; **/
+    text-decoration: none;
+}
+
+#menu li a:active {
+}
+
+#menu li a.active {
+    color: white;
+}
+
+#menu li.dropdown {
+    display: inline-block;
+}
+
+#menu .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: darkblue;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 5;
+}
+
+#menu .dropdown-content a {
+    color: yellow;
+    padding: 1px 4px 4px 4px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+#menu .dropdown-content a:hover {
+    background-color: darkblue;
+    font-weight: bold;
+}
+
+#menu .dropdown:hover .dropdown-content {
+    display: block;
+}
+
+#footer {
+    font-size: 11px;
+}
+
+table.rtcm {
+    border-collapse: collapse;
+    border: 1px solid black;
+    padding: 5px;
+    font-family: verdana,arial,sans-serif;
+}
+
+table.rtcm tr {
+    font-size: 12px;
+}
+
+table.rtcm td {
+    white-space: nowrap;
+}
+
+table.rtcm th {
+    border: 1px solid black;
+    font-size: 12px;
+    padding: 5px;
+    background-color: #dedede;
+}
+
+table.gridtable {
+    font-family: verdana,arial,sans-serif;
+    font-size: 12px;
+    color: black;
+    padding: 4px;
+    border-width: 1px;
+    border-color: black;
+    border-collapse: collapse;
+}
+
+table.gridtable th {
+    border-width: 1px;
+    padding: 4px;
+    border-style: solid;
+    border-color: black;
+    background-color: lightgray;
+    font-size: 12px;
+}
+
+table.gridtable td {
+    border-width: 1px;
+    padding: 4px;
+    border-style: solid;
+    border-color: black;
+    background-color: #ffffff;
+    font-size: 11px;
+}
+
+table.gridtable tr.rColor td {
+    background-color: darkblue;
+    font-weight: bold;
+    color: yellow;
+}
+
+table.gridtable tr.cColor td {
+    background-color: red;
+    font-weight: bold;
+    color: yellow;
+}
+
+table.gridtable tr.bColor td {
+    background-color: palegreen;
+    font-weight: bold;
+    color: black;
+}
+
+table.gridtable tr.gColor td {
+    background-color: lightgray;
+    font-weight: bold;
+    color: black;
+}
+
+table.gridtable tr.tColor td {
+    background-color: lemonchiffon;
+    font-weight: bold;
+    color: black;
+}
+
+table.gridtable tr.lColor td {
+    background-color: powderblue;
+    font-weight: bold;
+    color: black;
+}
+
+.disconnect {
+    font-size: 14px;
+    text-align: left;
+}
+
+.text {
+    position: relative;
+    margin: 0px 0px 0px 10px;
+    width: 330px;
+    font-size: 14px;
+    text-align: left;
+}
+
+.barbox_a {
+    position: absolute;
+    top: 2px;
+    left: 10px;
+    margin: 0px 0px 0px 0px;
+    width: 302px;
+    height: 22px;
+    background-color: black;
+}
+
+.bar {
+    position: relative;
+    top: 1px;
+    left: 1px;
+    margin: 0px 0px 0px 0px;
+    width: 0px;
+    height: 20px;
+    background-color: #0099FF;
+    text-align: center;
+    color: white;
+}
+
+.per {
+    position: absolute;
+    top: 0px;
+    font-size: 12px;
+    left: 50%;
+    height: 20px;
+    margin: 0px 0px 0px 0px;
+    background-color: #0099FF;
+    color: white;
+}
+
+.blank {
+    background-color: white;
+    width: 300px;
+}
+
+#login {
+    display: none;
+}
+
+#login-header {
+    margin: 0 auto;
+    position: absolute;
+    right: 250px;
+}
+
+#login-link {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    display: block;
+    background: #2a2a2a;
+    padding: 5px 15px 5px 15px;
+    color: #FFF;
+}
+
+#login-panel {
+    position: absolute;
+    top: 26px;
+    right: 0px;
+    width: 200px;
+    padding: 10px 15px 5px 15px;
+    background: #2a2a2a;
+    font-size: 10pt;
+    font-weight: bold;
+    color: #FFF;
+    display: none;
+}
+
+label {
+    line-height: 1.8;
+}
+
+.clearer {
+    clear: both;
+}
+
+#cpMain {
+    display: none;
+}
+
+.submit {
+    background: lightgray;
+    padding: 3px 4px 4px 4px 1px;
+    color: black;
+}
+
+.submit:hover {
+    background: darkblue;
+    font-weight: bold;
+    padding: 3px 4px 4px 4px 1px;
+    color: yellow;
+}

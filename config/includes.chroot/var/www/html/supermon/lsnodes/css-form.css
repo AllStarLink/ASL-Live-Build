@@ -1,0 +1,79 @@
+body { 
+	margin:0; 
+	padding:0; 
+	}
+	
+p {
+	margin:0 0 10px 0;
+	padding:0;
+	}
+
+p.header {font-size:1.2em; font-family: Verdana, Arial, Helvetica, sans-serif; margin-top:1em; margin-bottom:1em; text-align:center; }
+p.text {font-size:.8em; font-family: Verdana, Arial, Helvetica, sans-serif; margin-top:2em; margin-left:15em; margin-right:15em; text-align:justify; }
+
+
+
+form {
+	font:18px Verdana, Arial, Helvetica, sans-serif;
+	background:#eee;
+	margin:20px;
+	padding:10px 20px;
+	width:430px;	
+	}
+	
+	form ol {
+		list-style:none;
+		margin:0;
+		padding:0;
+		}
+		
+		form li {
+			padding:6px;
+			background:#e1e1e1;
+			margin-bottom:1px;
+			}
+			
+			form li#send {
+				background:none;
+				margin-top:6px;
+				}
+		
+		form label {
+			float:left;
+			width:170px;
+			text-align:right;	
+			margin-right:7px;
+			color:#0066CC;
+			line-height:23px; /* This will make the labels vertically centered with the inputs */
+			}
+			
+		form input,
+		form textarea {
+			padding:4px;
+			font:16px Verdana, Arial, Helvetica, sans-serif;
+			border:1px solid #999999;
+			width:175px;
+			}
+			
+			form input:focus,
+			form textarea:focus {
+				border:1px solid #666;
+				background:#e3f1f1;
+				}
+			
+		form li#send button {
+			background:#003366 url(images/css-form-send.gif) no-repeat 8px 50%;
+			border:none;
+			padding:4px 8px 4px 28px;
+			border-radius:15%; /* Don't expect this to work on IE6 or 7 */
+			-moz-border-radius:15%;
+			-webkit-border-radius:15%;			
+			color:#fff;
+			margin-left:77px; /* Total width of the labels + their right margin */
+			cursor:pointer;
+			}
+			
+			form li#send button:hover { 
+				background-color:#006633;
+				}
+

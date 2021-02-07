@@ -14,3 +14,9 @@ make pi
 Adam KC1KCC
 
 Rob KK9ROB
+
+## License
+
+ASL-Live-Build is open-sourced software licensed under the GPLv3 License
+
+(C) 2021 AllStarLinkInc

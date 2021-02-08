@@ -3,3 +3,5 @@
 rm -rf /etc/asterisk 
 mv /etc/asterisk.asl /etc/asterisk
 
+# Remove hard coded sound files
+rm -rf /var/lib/asterisk/sounds/rpt/nodenames/*

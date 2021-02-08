@@ -25,8 +25,6 @@ What’s new in ASL 2.0.0-beta?
 - Most of the C code has been refactored to compile with current compiler.
 - Http registration with failover to IAX2.
 - Multi-thread
-- Selected notes from the author:
-
 - Use libcurl for statpost instead of shell call to wget
 - Update startup/shutdown scripts to query systemctl for service status
 - Clean up output from cli>rpt local nodes

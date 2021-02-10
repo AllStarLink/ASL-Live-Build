@@ -24,7 +24,7 @@ if [[ " ${@} " =~ " build_rpi " ]]; then
     --archive-areas "main contrib non-free rpi"
     --system normal 
     --updates false 
-    --security false)
+    --security true)
 
   PLATFORM=`uname -m` 
 
@@ -44,7 +44,6 @@ else
     --image-name asl-2.0.0-beta.2-kc1kcc-x86-$(date +"%m%d%y")
     --debootstrap-options "--keyring ./debian-archive-buster-stable.gpg --include=ca-certificates"
     --binary-images iso-hybrid
-    --linux-packages "linux-headers"
     --iso-application AllStarLink
     --iso-preparer "KC1KCC and KK9ROB"
     --iso-publisher "AllStarLink, Inc."

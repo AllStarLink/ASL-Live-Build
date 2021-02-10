@@ -1,5 +1,5 @@
 desktop-image: "../splash.png"
-title-color: "#ffffff"
+title-color: "#008000"
 title-font: "DejaVu Sans Bold 16"
 title-text: "Live Boot Menu with GRUB"
 message-font: "Unifont Regular 16"
@@ -13,7 +13,7 @@ terminal-font: "Unifont Regular 16"
         height = 20
         text = "@KEYMAP_SHORT@"
         align = "center"
-        color = "#ffffff"
+        color = "#000000"
 	font = "DejaVu Sans Bold 14"
 }
 
@@ -25,7 +25,7 @@ terminal-font: "Unifont Regular 16"
         height = 48%-80
         item_color = "#a8a8a8"
 	item_font = "DejaVu Sans Bold 14"
-        selected_item_color= "#ffffff"
+        selected_item_color= "#008000"
 	selected_item_font = "DejaVu Sans Bold 14"
         item_height = 16
         item_padding = 0
@@ -44,8 +44,8 @@ terminal-font: "Unifont Regular 16"
         width = 70%
         font = "DejaVu Sans Regular 14"
         text_color = "#000000"
-        fg_color = "#ffffff"
-        bg_color = "#a8a8a8"
-        border_color = "#ffffff"
+        fg_color = "#000000"
+        bg_color = "#ffffff"
+        border_color = "#000000"
         text = "@TIMEOUT_NOTIFICATION_LONG@"
 }

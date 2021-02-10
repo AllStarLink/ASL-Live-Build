@@ -2,5 +2,5 @@
 
 systemctl disable asl-asterisk
 systemctl enable asterisk
-apt -y remove auto-apt-proxy
+# apt -y remove auto-apt-proxy
 

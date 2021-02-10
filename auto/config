@@ -1,7 +1,9 @@
 #!/bin/bash
 
 OPTIONS=( --mode debian
-    --distribution buster )
+    --distribution buster
+    --apt-indices false
+    --apt-recommends false)
 
 if [[ " ${@} " =~ " build_rpi " ]]; then
   args=( ${@/build_rpi} )
@@ -43,13 +45,15 @@ else
     --architectures amd64
     --image-name asl-2.0.0-beta.2-kc1kcc-x86-$(date +"%m%d%y")
     --debootstrap-options "--keyring ./debian-archive-buster-stable.gpg --include=ca-certificates"
-    --binary-images hdd
-    --binary-filesystem fat32
+    --binary-images iso-hybrid
+    --iso-application AllStarLink
+    --iso-preparer "KC1KCC and KK9ROB"
+    --iso-publisher "AllStarLink, Inc."
+    --iso-volume "ASL2.0.0Beta"
     --debian-installer live
     --debian-installer-gui false
     --archive-areas "main contrib non-free"
     --win32-loader "false"
-    --uefi-secure-boot false
     --security true )
 for f in `ls rpi_files/archives/`; do
   rm config/archives/$f 2>/dev/null

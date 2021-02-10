@@ -7,7 +7,7 @@ if [[ " ${@} " =~ " build_rpi " ]]; then
   args=( ${@/build_rpi} )
   OPTIONS+=(
     --architectures armhf 
-    --image-name asl-2.0.0-beta.2-kc1kcc-$(date +"%m%d%y")-rpi
+    --image-name asl-2.0.0-beta.3-kc1kcc-$(date +"%m%d%y")-rpi
     --binary-images hdd 
     --binary-filesystem ext4 
     --hdd-size 4096
@@ -41,7 +41,7 @@ else
     args=${@}
     OPTIONS+=(
     --architectures amd64
-    --image-name asl-2.0.0-beta.2-kc1kcc-x86-$(date +"%m%d%y")
+    --image-name asl-2.0.0-beta.3-kc1kcc-x86-$(date +"%m%d%y")
     --debootstrap-options "--keyring ./debian-archive-buster-stable.gpg --include=ca-certificates"
     --binary-images iso-hybrid
     --iso-application AllStarLink

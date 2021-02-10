@@ -1,9 +1,7 @@
 #!/bin/bash
 
 OPTIONS=( --mode debian
-    --distribution buster
-    --apt-indices false
-    --apt-recommends false)
+    --distribution buster )
 
 if [[ " ${@} " =~ " build_rpi " ]]; then
   args=( ${@/build_rpi} )
@@ -46,6 +44,7 @@ else
     --image-name asl-2.0.0-beta.2-kc1kcc-x86-$(date +"%m%d%y")
     --debootstrap-options "--keyring ./debian-archive-buster-stable.gpg --include=ca-certificates"
     --binary-images iso-hybrid
+    --linux-packages "linux-headers"
     --iso-application AllStarLink
     --iso-preparer "KC1KCC and KK9ROB"
     --iso-publisher "AllStarLink, Inc."

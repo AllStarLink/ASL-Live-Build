@@ -44,7 +44,7 @@ else
     --image-name asl-2.0.0-beta.2-kc1kcc-x86-$(date +"%m%d%y")
     --debootstrap-options "--keyring ./debian-archive-buster-stable.gpg --include=ca-certificates"
     --binary-images hdd
-    --binary-filesystem ext4
+    --binary-filesystem fat32
     --debian-installer live
     --debian-installer-gui false
     --archive-areas "main contrib non-free"

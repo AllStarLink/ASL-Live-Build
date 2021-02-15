@@ -5,6 +5,18 @@ ISO and IMG creator for the ASL 2.0.0 distribution using Debian live-build.
 * Creates ISOs for net install for Intel/AMD64
 * Creates IMG files for Raspberry Pi2, 3, and 4
 
+## Requirements
+You must install Debian Live before you can build. 
+
+<pre>
+apt-get install live-build
+</pre>
+
+Consult this installation guide if you have other issues:
+
+https://live-team.pages.debian.net/live-manual/html/live-manual/installation.en.html#118
+
+## Building
 For x86_86 live boot / installer
 <pre>
 make pc

@@ -9,7 +9,8 @@ ISO and IMG creator for the ASL 2.0.0 distribution using Debian live-build.
 You must install Debian Live before you can build. 
 
 <pre>
-apt-get install live-build
+sudo apt-get install qemu-user-static qemu-utils qemu-system-arm
+sudo apt-get install live-build debootstrap
 </pre>
 
 Consult this installation guide if you have other issues:

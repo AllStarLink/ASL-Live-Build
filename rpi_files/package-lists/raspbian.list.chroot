@@ -1,5 +1,3 @@
-asl-raspberrypi-kernel-headers
-asl-raspberrypi-kernel
 raspberrypi-bootloader
 python-rpi.gpio
 fake-hwclock

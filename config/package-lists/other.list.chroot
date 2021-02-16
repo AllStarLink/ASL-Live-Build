@@ -43,7 +43,6 @@ rng-tools
 ethtool
 ntfs-3g
 pciutils
-dhcpcd5
 netbase
 freetype2-doc
 fail2ban

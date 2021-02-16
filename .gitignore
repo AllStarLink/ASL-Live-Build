@@ -28,6 +28,8 @@ config/build
 config/archives/*raspbian*
 config/archives/*Raspbian*
 config/package-lists/*raspbian*
+config/package-lists/*raspbian*
+config/package-lists/*asl-kernel*
 
 config/binary
 config/bootstrap

@@ -1,0 +1,16 @@
+<ezstream>
+    <url>http://audio3.broadcastify.com:80/mountpoint-provided-by-broadcastify</url>
+    <sourcepassword>feed-specific-password-not-same-as-website-login</sourcepassword>
+    <format>MP3</format>
+    <filename>stdin</filename>
+    <stream_once>1</stream_once>
+    <reconnect_tries>0</reconnect_tries>
+    <svrinfoname>Description </svrinfoname>
+    <svrinfourl>http://www.radioreference.com/</svrinfourl>
+    <svrinfogenre>Amateur Radio</svrinfogenre>
+    <svrinfodescription>Description</svrinfodescription>
+    <svrinfobitrate>16</svrinfobitrate>
+    <svrinfochannels>1</svrinfochannels>
+    <svrinfosamplerate>22050</svrinfosamplerate>
+    <svrinfopublic>1</svrinfopublic>
+</ezstream>

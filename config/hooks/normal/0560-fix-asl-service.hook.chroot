@@ -2,5 +2,6 @@
 
 systemctl disable asl-asterisk
 systemctl enable asterisk
-# apt -y remove auto-apt-proxy
 
+rm /var/lib/asterisk/rpt_extnodes
+ln -s /tmp/rpt_extnodes /var/lib/asterisk/rpt_extnodes

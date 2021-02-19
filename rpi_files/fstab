@@ -1,3 +1,4 @@
 proc            /proc           proc    defaults          0       0
 BOOTDEV  /boot           vfat    defaults          0       2
 ROOTDEV  /               ext4    defaults,noatime  0       1
+tmpfs /tmp tmpfs defaults,noatime,nosuid 0 0

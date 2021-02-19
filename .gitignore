@@ -27,6 +27,7 @@ config/build
 
 config/archives/*raspbian*
 config/archives/*Raspbian*
+config/archives/azlux*
 config/package-lists/*raspbian*
 config/package-lists/*raspbian*
 config/package-lists/*asl-kernel*

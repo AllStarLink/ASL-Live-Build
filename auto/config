@@ -27,7 +27,7 @@ if [[ " ${@} " =~ " build_rpi " ]]; then
     --archive-areas "main contrib non-free rpi"
     --system normal 
     --updates false 
-    --security false)
+    --security true)
 
   PLATFORM=`uname -m` 
 

@@ -7,7 +7,7 @@ After=network-online.target
 
 [Service]
 Type=simple
-StandardOutput=null
+# StandardOutput=null
 ExecStartPre=mkdir -p /run/asterisk
 ExecStart=/usr/sbin/asterisk -g -f
 ExecStop=/usr/sbin/asterisk -rx 'stop now'

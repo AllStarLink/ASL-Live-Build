@@ -1,0 +1,3 @@
+#!/bin/bash
+
+sed -i "s/var\/run/run/" /usr/lib/tmpfiles.d/fail2ban-tmpfiles.conf

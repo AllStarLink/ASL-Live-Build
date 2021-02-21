@@ -74,6 +74,7 @@ systemctl enable resize2fs_once
 systemctl disable hciuart.service
 systemctl disable bluealsa.service
 systemctl disable bluetooth.service
+systemctl disable dphys-swapfile.service
 EOT
 
 chroot $ROOTFS bash /setup.sh

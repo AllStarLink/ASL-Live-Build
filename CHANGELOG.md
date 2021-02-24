@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0-beta.4] - 2021-02-18
+
+* Use log2ram, tmpfs (memory) for /var/log to relieve SD card stress on Pi
+* Use tmpfs (memory) for /tmp on Pi
+* Use differential node updater (asl-nodes-diff) to improve registration
+* Add Broadcastify streaming support for Raspberry Pi
+* Make version bumps easier
+* Fix kernel headers issue with Pi
+* Fix echolink.conf warning in ast-menu
+* Fix URL path for allmondb
+
+## [2.0.0-beta.3] - 2021-02-11
+
+* Add nomodeset option for Intel Graphics issues on BIOS (Non-EFI) PCs
+* Add timeouts to Intel/AMD bootloaders. Remove linux-headers because it breaks the binary stage
+* Fix menu on EFI machines. Customize menu on non-EFI
+* asl-menu bug fixes resolve #3
+* Fix bug with raspberrypi-kernel-headers causing build Pi to fail
+
 ## [2.0.0-beta.2] - 2021-02-05
 
 - Add Supermon by default

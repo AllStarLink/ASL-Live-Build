@@ -1,17 +1,18 @@
 <?php
+
 include('session.inc');
 include('allmon.inc.php');
 
 if ($_SESSION['loggedin'] !== true) {
-        die("Please login to to user the Control Panel.\n");
+    die("Please login to to user the Control Panel.\n");
 }
 
 if (!isset($_GET['node'])) {
-	die('Unspecified failure!');
+    die('Unspecified failure!');
 }
 
 if (!isset($_GET['cmd'])) {
-	die ('Unspecified failure!');
+    die ('Unspecified failure!');
 }
 
 #print_r($_GET);
@@ -31,12 +32,12 @@ if (!isset($config[$node])) {
 
 // Set up connection
 $fp = AMIconnect($config[$node]['host']);
-if (FALSE === $fp) {
+if (false === $fp) {
     die("Could not connect to Asterisk Manager.");
 }
 
 // Login 
-if (FALSE === AMIlogin($fp, $config[$node]['user'], $config[$node]['passwd'])) {
+if (false === AMIlogin($fp, $config[$node]['user'], $config[$node]['passwd'])) {
     die("Could not login to Asterisk Manager.");
 }
 
@@ -44,10 +45,10 @@ if (FALSE === AMIlogin($fp, $config[$node]['user'], $config[$node]['passwd'])) {
 $cmdString = preg_replace("/%node%/", $node, $cmd);
 
 // AMI needs an ActionID so we can find our own response
-$actionRand = mt_rand(); 
-$actionID = 'cpAction_' . $actionRand;
+$actionRand = mt_rand();
+$actionID = 'cpAction_'.$actionRand;
 
-if ((@fwrite($fp,"ACTION: COMMAND\r\nCOMMAND: $cmdString\r\nActionID: $actionID\r\n\r\n")) > 0 ) {
+if ((@fwrite($fp, "ACTION: COMMAND\r\nCOMMAND: $cmdString\r\nActionID: $actionID\r\n\r\n")) > 0) {
     $rptStatus = get_response($fp, $actionID);
     print "<pre>\n===== $cmdString =====\n";
     print $rptStatus;
@@ -55,4 +56,3 @@ if ((@fwrite($fp,"ACTION: COMMAND\r\nCOMMAND: $cmdString\r\nActionID: $actionID\
 } else {
     die("Get node $cmdString failed!");
 }
-?>

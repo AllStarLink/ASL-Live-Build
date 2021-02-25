@@ -25,7 +25,8 @@
  */
 
 $dir = "/var/www/html/allmon2/";
-$db = $dir."astdb.txt";
+$db = "/var/log/asterisk/astdb.txt";
+
 $privatefile = $dir."privatenodes.txt";
 
 $retries = 0;

@@ -1,0 +1,2 @@
+@daily root /usr/sbin/astdb.php
+@reboot root sleep 60 ; /usr/sbin/astdb.php

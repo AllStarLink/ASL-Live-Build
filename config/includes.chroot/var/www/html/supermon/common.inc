@@ -7,16 +7,16 @@
 //	THIS FILE WILL BE OVERWRITTEN BY PACKAGE UPDATES!
 //
 // Title in header when logged in
-$TITLE_LOGGED = "Supermon 6.1+ AllStar Manager";
+$TITLE_LOGGED = "Supermon 6.1+ (ASL) AllStar Manager";
 //
 // Title in header when not logged in
-$TITLE_NOT_LOGGED = "Supermon 6.1+ AllStar Monitor";
+$TITLE_NOT_LOGGED = "Supermon 6.1+ (ASL) AllStar Monitor";
 //
 // Webserver access log
-$WEB_ACCESS_LOG = "/var/log/httpd/access_log";
+$WEB_ACCESS_LOG = "/var/log/apache2/access_log";
 //
 // Webserver error log
-$WEB_ERROR_LOG = "/var/log/httpd/error_log";
+$WEB_ERROR_LOG = "/var/log/apache2/error_log";
 //
 // Asterisk message log
 $ASTERISK_LOG = "/var/log/asterisk/messages";
@@ -89,4 +89,3 @@ if (file_exists($EXTNODES)) {
 } else {
     $EXTN = false;
 }
-?>

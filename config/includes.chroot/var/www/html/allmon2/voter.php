@@ -38,7 +38,7 @@ foreach ($passedNodes as $node) { ?>
   <div id="link_list_<?php
   echo $node; ?>">Loading voter...
   </div>
-<?php
+    <?php
 } ?>
 <div style='width:500px; text-align:left;'>
   The numbers indicate the relative signal strength. The value ranges from 0 to 255, a range of approximately 30db.
@@ -51,4 +51,4 @@ foreach ($passedNodes as $node) { ?>
   <div style='background-color: cyan; color: black; text-align: center;'>Cyan is a non-voting mix station.</div>
 </div>
 <?php
-include "footer.inc"; ?>
+include "footer.inc";

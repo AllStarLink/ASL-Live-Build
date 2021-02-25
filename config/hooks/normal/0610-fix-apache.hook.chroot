@@ -1,6 +1,9 @@
 #!/bin/bash
 
 rm /var/www/html/index.html
+
+# Supermon
+a2enmod cgi
 cpanm CGI::Carp
 touch /var/log/asterisk/astdb.txt
 chmod 777 /var/log/asterisk/astdb.txt

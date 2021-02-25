@@ -12,7 +12,8 @@ if (count($passedNodes) == 0) {
 }
 
 // Get Allstar database file
-$db = "astdb.txt";
+$db = "/var/log/asterisk/astdb.txt";
+
 $astdb = array();
 if (file_exists($db)) {
     $fh = fopen($db, "r");
@@ -240,4 +241,4 @@ foreach ($passedNodes as $i => $node) {
 </div>
 <div id="blinky"></div>
 <?php
-include "footer.inc"; ?>
+include "footer.inc";

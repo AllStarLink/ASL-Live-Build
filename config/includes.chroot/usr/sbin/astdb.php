@@ -23,7 +23,7 @@ if (!empty($privateArr)) {
 natsort($fileArr);
 
 // Output
-$db = "astdb.txt";
+$db = "/var/log/asterisk/astdb.txt";
 if (! $fh = fopen($db, 'w')) {
     die("Cannot open $db.");
 }

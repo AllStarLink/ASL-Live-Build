@@ -1,4 +1,5 @@
 <?php
+
 include "session.inc"; ?>
 <?php
 include "header.inc"; ?>
@@ -44,4 +45,4 @@ Version 2 changes:
   <li>Voter display is a selected node rather than all nodes on the server.
 </ul>
 <?php
-include "footer.inc"; ?>
+include "footer.inc";

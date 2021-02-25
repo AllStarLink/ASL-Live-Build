@@ -73,4 +73,3 @@ $outBuf .= "<div class=\"clearer\"></div>";
 print $outBuf;
 
 //print '<pre>'; print_r($outBuf); print '</pre>';
-?>

@@ -9,13 +9,13 @@ $CALL = "Your CALL";
 $NAME = "Your NAME";
 //
 // Your location
-$LOCATION = "Your LOCATION";
+$LOCATION = "Edit /var/www/html/supermon/global.inc to change!";
 //
 // Second line header title
-$TITLE2 = "RPi2-3 Node";
+$TITLE2 = "RPi2-3-4 Node";
 //
 // Third line header title
-$TITLE3 = "Allstar/IRLP/Echolink System Manager";
+$TITLE3 = "AllStar/IRLP/Echolink System Manager";
 //
 // Background image - specify path if not /var/www/html/supermon
 // Leaving BACKGROUND null "" results in BACKGROUND_COLOR
@@ -35,6 +35,4 @@ $REFRESH_DELAY = "21600";
 $SHOW_COREDUMPS = "yes";
 //
 // Show weather conditions and temperature for Zip code area
-$LOCALZIP = "33904";
-
-?>
+$LOCALZIP = "93301";

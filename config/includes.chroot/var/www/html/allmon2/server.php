@@ -20,7 +20,7 @@ if (empty($_GET['nodes'])) {
 $passedNodes = explode(',', @trim(strip_tags($_GET['nodes'])));
 
 // Get Allstar database file
-$db = "astdb.txt";
+$db = "/var/log/asterisk/astdb.txt";
 $astdb = array();
 if (file_exists($db)) {
     $fh = fopen($db, "r");

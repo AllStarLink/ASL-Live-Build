@@ -395,22 +395,21 @@ if ($_SESSION['sm61loggedin'] === true) {
           $uptime = exec("$UPTIME");
           $hostname = exec("$HOSTNAME |$AWK -F '.' '{print $1}'");
           $myday = exec("$DATE '+%A, %B %e, %Y %Z'");
-          $astport = exec("$CAT /etc/asterisk/iax.conf |$EGREP 'bindport' |$SED 's/bindport=//g'");
+          $astport = exec("$CAT /etc/asterisk/iax.conf |$EGREP 'bindport' | $HEAD -1 | $SED 's/[^0-9]*//g'");
           $mgrport = exec("$CAT /etc/asterisk/manager.conf |$EGREP '^port =' |$SED 's/port = //g'");
           if (empty($WANONLY)) {
-              //$myip = exec("$WGET -t 1 -T 3 -q -O- http://checkip.dyndns.org:8245 |$CUT -d':' -f2 |$CUT -d' ' -f2 |$CUT -d'<' -f1");
               $myip = exec("$WGET -t 1 -T 3 -q -O- http://icanhazip.com/ |$CUT -d':' -f2 |$CUT -d' ' -f2 |$CUT -d'<' -f1");
               $WL = "";
-              $mylanip = exec("$IFCONFIG |$GREP inet | $HEAD -1 |$AWK '{print $2}'");
+              $mylanip = exec("$IFCONFIG | $GREP inet | $GREP -v inet6 | $HEAD -1 | $AWK '{print $2}'");
               if ($mylanip == "127.0.0.1") {
-                  $mylanip = exec("$IFCONFIG |$GREP inet |$TAIL -1 |$AWK '{print $2}'");
+                  $mylanip = exec("$IFCONFIG | $GREP inet | $GREP -v inet6 | $TAIL -1 | $AWK '{print $2}'");
                   $WL = "W";
               }
           } else {
               $mylanip = exec("$IFCONFIG |$GREP inet |$HEAD -1 |$AWK '{print $2}'");
               $myip = $mylanip;
           }
-          $myssh = exec("$CAT /etc/ssh/sshd_config |$EGREP '^Port' |$TAIL -1 |$CUT -d' ' -f2");
+          $myssh = exec("$CAT /etc/ssh/sshd_config |$EGREP '^Port|^#Port' |$TAIL -1 |$CUT -d' ' -f2");
           if ($myip == $mylanip) {
               print "[ $hostname ] [ WAN IP: <a href=\"custom/iplog.txt\" target=\"_blank\">${myip}</a> ] [ AstP: ${astport} ] [ MgrP: ${mgrport} ] [ SShP: ${myssh} ]";
           } else {

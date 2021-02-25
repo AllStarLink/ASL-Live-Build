@@ -39,51 +39,54 @@ $IRLP_LOG = "/home/irlp/log/messages";
 //
 // Make sure this is hamvoip "Vx.xrc" code
 // $version="`head -2 /etc/allstar_version`;
-$version=`export TERM=vt100 && sudo asterisk -rx "core show version" |awk '{print $2}'`;
-$version="Asterisk $version";
+$version = `export TERM=vt100 && sudo asterisk -rx "core show version" |awk '{print $2}'`;
+$version = "Asterisk $version";
 //echo "<p>$version</p>";
-$pattern="/ [0-9].[0-9]rc[0-9]/";
+$pattern = "/ [0-9].[0-9]rc[0-9]/";
 
 if (preg_match($pattern, $version, $match)) {
-	$system_type = "hamvoip";
+    $system_type = "hamvoip";
 } else {
-	// Add other types if needed here
-	// $system_type="";
-	$system_type = "asl";
+    // Add other types if needed here
+    // $system_type="";
+    $system_type = "asl";
 }
 //
 //	Paths to various programs called from php...
-$ASTERISK =	"/usr/bin/asterisk";
-$AWK =		"/bin/awk";
-$CAT =		"/bin/cat";
-$CUT =		"/bin/cut";
-$DATE =		"/bin/date";
-$EGREP =	"/bin/egrep";
-$GREP =		"/bin/grep";
-$HEAD =		"/bin/head";
-$HOSTNAME =	"/bin/hostname";
-$IFCONFIG =	"/bin/ifconfig";
-$JOURNALCTL =	"/usr/bin/journalctl";
-$MBUFFER =	"/usr/local/bin/mbuffer";
-$SED =		"/bin/sed";
-$SUDO =		"export TERM=vt100 && /usr/bin/sudo";
-$TAIL =		"/bin/tail";
-$UPTIME =	"/bin/uptime";
-$WGET =		"/bin/wget";
-$ZCAT =		"/bin/zcat";
+$ASTERISK = "/usr/bin/asterisk";
+$AWK = "/bin/awk";
+$CAT = "/bin/cat";
+$CUT = "/bin/cut";
+$DATE = "/bin/date";
+$EGREP = "/bin/egrep";
+$GREP = "/bin/grep";
+$HEAD = "/bin/head";
+$HOSTNAME = "/bin/hostname";
+$IFCONFIG = "/usr/sbin/ifconfig";
+$JOURNALCTL = "/usr/bin/journalctl";
+$MBUFFER = "/usr/local/bin/mbuffer";
+$SED = "/bin/sed";
+$SUDO = "export TERM=vt100 && /usr/bin/sudo";
+$TAIL = "/bin/tail";
+$UPTIME = "/bin/uptime";
+$WGET = "/bin/wget";
+$ZCAT = "/bin/zcat";
 
-if (file_exists($IRLP_LOG))
-	$IRLPLOG = true;
-else
-	$IRLPLOG = false;
+if (file_exists($IRLP_LOG)) {
+    $IRLPLOG = true;
+} else {
+    $IRLPLOG = false;
+}
 
-if (file_exists($IRLP_CALLS))
-	$IRLP = true;
-else
-	$IRLP = false;
+if (file_exists($IRLP_CALLS)) {
+    $IRLP = true;
+} else {
+    $IRLP = false;
+}
 
-if (file_exists($EXTNODES))
-	$EXTN = true;
-else
-	$EXTN = false;
+if (file_exists($EXTNODES)) {
+    $EXTN = true;
+} else {
+    $EXTN = false;
+}
 ?>

@@ -1,4 +1,5 @@
 <?php
+
 include("session.inc");
 
 // Author: Paul Aidukas KN2R (Copyright) July 15, 2013
@@ -20,5 +21,3 @@ if ($node == '') {
     $url = "<script>window.open('http://stats.allstarlink.org/getstatus.cgi\?$node')</script>";
     echo $url;
 }
-
-?>

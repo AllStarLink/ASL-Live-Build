@@ -1,4 +1,5 @@
 <?php
+
 include("session.inc");
 include("common.inc");
 
@@ -10,20 +11,22 @@ include("common.inc");
 ?>
 <html>
 <head>
-<title>AllStar rpt_extnodes contents</title>
+  <title>AllStar rpt_extnodes contents</title>
 </head>
 <body>
 <pre>
 <?php
-	if ($_SESSION['sm61loggedin'] === true) {
-                $file = $EXTNODES;
-                echo "File: $file\n-----------------------------------------------------------------\n";
-                if (file_exists ("$file"))
-                        echo file_get_contents($file);
-                else
-                        echo "\n\nAllStar rpt_extnodes table is not available.\n";
-	} else
-		echo ("<br><h3>ERROR: You Must login to use this function!</h3>");
+if ($_SESSION['sm61loggedin'] === true) {
+    $file = $EXTNODES;
+    echo "File: $file\n-----------------------------------------------------------------\n";
+    if (file_exists("$file")) {
+        echo file_get_contents($file);
+    } else {
+        echo "\n\nAllStar rpt_extnodes table is not available.\n";
+    }
+} else {
+    echo("<br><h3>ERROR: You Must login to use this function!</h3>");
+}
 ?>
 </pre>
 </body>

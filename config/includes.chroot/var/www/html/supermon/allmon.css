@@ -4,24 +4,24 @@
 }
 
 .nodeNum:hover {
-	font-weight: bold;
+    font-weight: bold;
 }
 
 #bubblechart {
-	font-size: 8px;
+    font-size: 8px;
 }
 
 #header {
-    position:relative;
-    width:100%;
+    position: relative;
+    width: 100%;
     background-color: #82A505;
-    height:120px;
+    height: 120px;
 }
 
 #headerTitle {
     position: absolute;
-    top:20px;
-    left:10px;
+    top: 20px;
+    left: 10px;
     margin: 0px 0px;
     font-size: 2.5em;
     line-height: normal;
@@ -40,9 +40,9 @@
 }
 
 #headerTag {
-    position:absolute;
-    top:70px;
-    left:10px;
+    position: absolute;
+    top: 70px;
+    left: 10px;
     margin: 0px 00px;
     font-weight: normal;
     font-size: 1.0em;
@@ -52,56 +52,56 @@
 }
 
 #headerImg {
-    position:absolute;
-    top:10px;
-    right:5px;
+    position: absolute;
+    top: 10px;
+    right: 5px;
 }
 
 #headerLogin a:link {
     text-decoration: none;
-    color: #ffff99;    
+    color: #ffff99;
 }
 
 #headerLogin {
-    position:absolute;
-    top:95px;
-    left:30px;
-    font-size:12px;
-    font-family:Verdana,Arial,sans-serif;
+    position: absolute;
+    top: 95px;
+    left: 30px;
+    font-size: 12px;
+    font-family: Verdana, Arial, sans-serif;
 }
 
 #headerLogin a:visited {
     text-decoration: none;
-    color: #ffff99;    
+    color: #ffff99;
 }
 
 #menu {
-/*  position:static;
-    height: 25px; */
+    /*  position:static;
+        height: 25px; */
     float: left;
     width: 100%;
     background-color: #446600;
-    font-size:12px;
-    font-family:Verdana,Arial,sans-serif;
+    font-size: 12px;
+    font-family: Verdana, Arial, sans-serif;
 }
 
 #menu a {
-	display: block;
-	padding: 5px 12px 5px;
-	text-decoration: none;
+    display: block;
+    padding: 5px 12px 5px;
+    text-decoration: none;
     color: #ffff99;
 }
 
 #menu a:hover {
-	background: transparent;
-	color:white;
+    background: transparent;
+    color: white;
 }
 
 #menu a:active {
 }
 
 #menu a.active {
-    color:white;
+    color: white;
 }
 
 #menu ul {
@@ -134,7 +134,7 @@
     position: absolute;
     background-color: #4E700A;
     min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 5;
 }
 
@@ -148,7 +148,7 @@
 
 #menu .dropdown-content a:hover {
     background-color: #587A14;
-	color:white;
+    color: white;
 }
 
 #menu .dropdown:hover .dropdown-content {
@@ -156,58 +156,62 @@
 }
 
 #footer {
-    font-size:10px;
+    font-size: 10px;
 }
 
 table.rtcm {
-   border-collapse:collapse;
-   border:1px solid black;
-   font-family:verdana,arial,sans-serif;
+    border-collapse: collapse;
+    border: 1px solid black;
+    font-family: verdana, arial, sans-serif;
 }
+
 table.rtcm tr {
-	font-size:12px;
+    font-size: 12px;
 }
 
 table.rtcm td {
-	white-space:nowrap;
+    white-space: nowrap;
 }
 
 table.rtcm th {
-    border:1px solid black;
-	font-size:13px;
-	background-color: #dedede;
+    border: 1px solid black;
+    font-size: 13px;
+    background-color: #dedede;
 }
 
 table.gridtable {
-	font-family: verdana,arial,sans-serif;
-	font-size:11px;
-	color:#333333;
-	border-width: 1px;
-	border-color: #666666;
-	border-collapse: collapse;
+    font-family: verdana, arial, sans-serif;
+    font-size: 11px;
+    color: #333333;
+    border-width: 1px;
+    border-color: #666666;
+    border-collapse: collapse;
 }
 
 table.gridtable th {
-	border-width: 1px;
-	padding: 4px;
-	border-style: solid;
-	border-color: #666666;
-	background-color: #dedede;
+    border-width: 1px;
+    padding: 4px;
+    border-style: solid;
+    border-color: #666666;
+    background-color: #dedede;
 }
+
 table.gridtable td {
-	border-width: 1px;
-	padding: 4px;
-	border-style: solid;
-	border-color: #666666;
-	background-color: #ffffff;
+    border-width: 1px;
+    padding: 4px;
+    border-style: solid;
+    border-color: #666666;
+    background-color: #ffffff;
 }
 
 table.gridtable tr.rColor td {
-      background-color: #8BA51A; color: white;
+    background-color: #8BA51A;
+    color: white;
 }
 
 table.gridtable tr.cColor td {
-      background-color: #FF9900; color: white;
+    background-color: #FF9900;
+    color: white;
 }
 
 .disconnect {
@@ -216,47 +220,49 @@ table.gridtable tr.cColor td {
 }
 
 .text {
-  position: relative;
-  margin: 0px 0px 0px 10px;
-  width: 330px;
-  font-size: 14px;
-  text-align: left;
+    position: relative;
+    margin: 0px 0px 0px 10px;
+    width: 330px;
+    font-size: 14px;
+    text-align: left;
 }
+
 .barbox_a {
-  position: absolute;
-  top: 2px;
-  left: 10px;
-  margin: 0px 0px 0px 0px;
-  width: 302px;
-  height: 22px;
-  background-color: black;
+    position: absolute;
+    top: 2px;
+    left: 10px;
+    margin: 0px 0px 0px 0px;
+    width: 302px;
+    height: 22px;
+    background-color: black;
 }
+
 .bar {
-  position: relative;
-  top: 1px;
-  left: 1px;
-  margin: 0px 0px 0px 0px;
-  width: 0px;
-  height: 20px;
-  background-color: #0099FF;
-  text-align: center;
-  color: white;
+    position: relative;
+    top: 1px;
+    left: 1px;
+    margin: 0px 0px 0px 0px;
+    width: 0px;
+    height: 20px;
+    background-color: #0099FF;
+    text-align: center;
+    color: white;
 }
 
 .per {
-  position: absolute;
-  top: 0px;
-  font-size: 12px;
-  left: 50%;
-  height: 20px;
-  margin: 0px 0px 0px 0px;
-  background-color: #0099FF;
-  color: white;
+    position: absolute;
+    top: 0px;
+    font-size: 12px;
+    left: 50%;
+    height: 20px;
+    margin: 0px 0px 0px 0px;
+    background-color: #0099FF;
+    color: white;
 }
 
 .blank {
-  background-color: white;
-  width: 300px;
+    background-color: white;
+    width: 300px;
 }
 
 #login {
@@ -268,6 +274,7 @@ table.gridtable tr.cColor td {
     position: absolute;
     right: 250px;
 }
+
 #login-link {
     position: absolute;
     top: 0px;
@@ -277,6 +284,7 @@ table.gridtable tr.cColor td {
     padding: 5px 15px 5px 15px;
     color: #FFF;
 }
+
 #login-panel {
     position: absolute;
     top: 26px;
@@ -289,12 +297,13 @@ table.gridtable tr.cColor td {
     color: #FFF;
     display: none;
 }
+
 label {
     line-height: 1.8;
 }
 
 .clearer {
-	clear: both;
+    clear: both;
 }
 
 #cpMain {

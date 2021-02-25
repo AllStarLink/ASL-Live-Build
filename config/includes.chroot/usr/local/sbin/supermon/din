@@ -1,0 +1,116 @@
+#!/bin/bash -p
+#
+# Program: din  (Disk INfo)
+# Author : Paul Aidukas KN2R (Copyright) January 4, 1998 - 2018
+# For ham radio use only, NOT for commercial use!
+#
+# Display disk information on Solaris sparc/i86pc, Red-Hat, CentOS,
+# Fedora, Debian, Slackware, Beagle-Bone, etc., etc. Linux systems!
+#
+# Supports: ufs, vxfs, nfs, ext4, ext3, ext2, pcfs, vfat, NAS,
+#           ntfs (fuseblk), and RAMDisk file systems!!
+#
+# 04-Jan-98  Paul/KN2R (PEA)  Initial Release.
+# 13-Feb-98  PEA  Added ANSI color display support.
+# 03-May-04  PEA  Added vxfs, ext2, and ext3 filesystems.
+# 17-Nov-06  PEA  Fixed printf formating for older Linux awk program.
+# 06-Apr-07  PEA  Added pcfs filesystem (usb flash drives).
+# 13-Nov-07  PEA  Added nfs filesystem for NAS systems.
+# 14-Mar-08  PEA  Refined display for NAS filesystems.
+# 07-Apr-08  PEA  Added vfat filesystem.
+# 15-Jun-09  PEA  Removed "/dev/mapper/" & ".localdomain" from display.
+# 17-Sep-09  PEA  Added /dev/ram* RAMDisk filesystem.
+# 10-Nov-14  PEA  Added ext4 filesystem.
+# 11-Jun-18  PEA  Added NTFS filesystem.
+#
+########################################################################
+
+PATH=/bin:/usr/bin:/sbin:/usr/sbin:/usr/ucb; Version="4.0"; [ $BASH ] && shopt -s xpg_echo
+if [ -a ~/.color ]; then nul="\033[0m";cyn="\033[1;36m";yel="\033[1;33m";wht="\033[1;37m";gry="\033[0;37m"; fi
+echo "${yel}"; uname -a |sed 's/x86_64 x86_64 x86_64/x86_64/g' |sed 's/i686 i686 i386/i686\/i386/' |sed 's/i586 i586 i386/i586\/i386/' |sed 's/ GNU\/Linux//' |sed 's/\.localdomain//'
+DATE=`date '+%a'`; TIME=`date '+%l:%M'`; AMPM=`date '+%p' |tr "[:upper:]" "[:lower:]"`
+YEAR=`date '+ %Z %b %d %Y'`; FDATE=`echo $DATE $TIME$AMPM$YEAR |sed 's/  */ /g' |sed 's/ 0/ /'`
+if [ -x /bin/zonename ]; then
+    zonnm=`zonename`
+    if [ "$zonnm" != "global" ]; then
+        zoninf=", Zonename: $zonnm"
+    fi
+fi
+# echo "${FDATE}${zoninf}${gry}\n"
+printit() {
+    kb="(KBytes)"; [ $fs == "fuseblk" ] && fstype="NTFS"
+    echo "${nul}\r${cyn}$fstype Filesystem  ${spc} ${kb}       Total        Used   Available  Cap Mounted on${wht}"
+    echo "==========================-===========-===========-===========-====-==========="
+    echo "$filesys" |awk 2>/dev/null ' NF > 4 \
+   {printf("%-26s %11s %11s %11s %4s %1-s\n",$1,$2,$3,$4,$5,$6); \
+    total += $2; usd += $3; avl += $4};END \
+   {printf("==========================-===========-===========-===========-====-===========\n");
+    printf("Total= KiloBytes:          %11s %11s %11s %3s%%\n",total/1,usd/1,avl/1,int((usd/total)*100));
+    printf("       MegaBytes:           %10.1f  %10.1f  %10.1f\n",total/1024,usd/1024,avl/1024);
+    printf("       GigaBytes:             %8.2f    %8.2f    %8.2f\n",total/1048576,usd/1048576,avl/1048576);
+    printf("       TeraBytes:               %6.3f      %6.3f      %6.3f\n\n",total/1073741824,usd/1073741824,avl/1073741824);}'
+}
+printit2() {
+    echo "${nul}\r${cyn}$fstype Filesystem  ${spc} ${kb}       Total        Used   Available  Cap Mounted on${wht}"
+    echo "==========================-===========-===========-===========-====-==========="
+    echo "$filesys" |awk 2>/dev/null ' NF > 4 \
+   {printf("%-26s %11s %11s %11s %4s %1-s\n",$1,$2,$3,$4,$5,$6); \
+    total += $2; usd += $3; avl += $4};END \
+   {printf("==========================-===========-===========-===========-====-===========\n");}'
+}
+optns=$*; fsm="-k"
+if [ `echo "$optns" |egrep -ic '\-h'` -gt 0 ]; then fsm="-h"; fi
+optns=`echo "$optns" |sed 's/\-h//g' |sed 's/ *//g'`
+for fs in ufs vxfs nfs ext4 ext3 ext2 pcfs vfat fuseblk ntfs
+do
+    ## filesys=`df $fsm -F $fs 2>/dev/null |egrep -vi '^$|^auto_|^Filesystem|\/home\/'`
+    filesys=`df $fsm -F $fs 2>/dev/null |egrep -vi '^$|^auto_|^Filesystem'`
+    if [ "$filesys" ]; then
+        spc=""; if [ "$fs" = "ufs" -o "$fs" = "nfs" ]; then spc=" "; fi
+        fstype=`echo $fs |tr '[:lower:]' '[:upper:]'`
+        if [ "$fs" = "nfs" ]; then
+	    filesys=`echo "$filesys" |egrep -i 'nas_unix' |awk '{print $6}'`
+	    fstype=NAS; nsrtfilesys=""
+	    [ -n "$filesys" ] && echo "${nul}${cyn}$fstype Filesystem   [working] \c"
+	    for nas_dfi in `echo "$filesys"`
+	    do
+	        nfilesys_tmp="`ls -1 $nas_dfi`"
+	        for nas_i in `echo "$nfilesys_tmp"`
+	        do
+	            nsrtfilesys=`echo "$nsrtfilesys\n$nas_i"`
+	        done
+	        nfilesys=""
+	        for nas_i2 in `echo "$nsrtfilesys"`
+	        do
+	            nfilesys=`echo "$nfilesys\n/programs/$nas_i2"`
+	        done
+	    done
+	    filesys=""
+	    for nas_nfi in `echo "$nfilesys"`
+	    do
+                test=`head -1 $nas_nfi 2>/dev/null`
+	        prg=`echo "$nas_nfi" |sed 's/\/programs\///g'`
+	        filesys1=`df $fsm $nas_nfi 2>/dev/null |egrep -vi '^$|^auto_|^Filesystem|\/home\/'`
+                filesys1=`echo "$filesys1" |sed 's/'$prg'//g'`
+                filesys=`echo "$filesys\n$filesys1/$prg"`
+	    done
+	    filesys=`echo "$filesys" |egrep -i 'pbynas|wkmnas' |sed 's/\/programs\/\///g' |sed 's/\/apps\/\///g'`
+	 else
+            filesys=`echo "$filesys" |sed 's/\/dev\/mapper\///g'`
+	    filesys=`echo $filesys |sed 's/  */ /g' |sed 's/\/dev/\'"\n"'\/dev/g'`
+            filesys=`echo "$filesys" |sed 's/\/unnamed_rmdisk//g' |sed 's/\/unnamed//g'`
+	fi
+	[ -n "$optns" ] && filesys=`echo "$filesys" |egrep -i $optns`
+	filesys=`echo "$filesys" |egrep -v '^$' |sort -uf |sort -k 6,6`
+        [ "$fsm" = "-h" ] && kb="        "
+	if [ "$filesys" ]; then
+	    if [ "$fsm" = "-h" ]; then
+	        printit2; echo "${gry}"
+	     else
+	        printit; echo "${gry}\c"
+	    fi
+        fi
+    fi
+done
+echo "\r${nul}\c"
+

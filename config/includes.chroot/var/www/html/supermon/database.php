@@ -1,4 +1,5 @@
 <?php
+
 include("session.inc");
 include("global.inc");
 include("common.inc");
@@ -11,26 +12,27 @@ include("common.inc");
 ?>
 <html>
 <head>
-<title>AllStar database.txt file contents</title>
+  <title>AllStar database.txt file contents</title>
 </head>
 <body style="background-color:powderblue;">
 <pre>
 <?php
-	if ($_SESSION['sm61loggedin'] === true) {
-                $statcmd = "/bin/date > $DATABASE_TXT";
-                exec($statcmd);
+if ($_SESSION['sm61loggedin'] === true) {
+    $statcmd = "/bin/date > $DATABASE_TXT";
+    exec($statcmd);
 
-                $statcmd = "echo >> $DATABASE_TXT";
-                exec($statcmd);
+    $statcmd = "echo >> $DATABASE_TXT";
+    exec($statcmd);
 
-                $statcmd = "export TERM=vt100 && /bin/sudo /usr/sbin/asterisk -rx 'database show' >> $DATABASE_TXT";
-                exec($statcmd);
+    $statcmd = "export TERM=vt100 && /bin/sudo /usr/sbin/asterisk -rx 'database show' >> $DATABASE_TXT";
+    exec($statcmd);
 
-		$file = $DATABASE_TXT;			// Defined in global.inc
-		echo "File: $file\n-----------------------------------------------------------------\n";
-		echo file_get_contents($file);
-	} else
-		echo ("<br><h3>ERROR: You Must login to use this function!</h3>");
+    $file = $DATABASE_TXT;      // Defined in global.inc
+    echo "File: $file\n-----------------------------------------------------------------\n";
+    echo file_get_contents($file);
+} else {
+    echo("<br><h3>ERROR: You Must login to use this function!</h3>");
+}
 ?>
 </pre>
 </body>

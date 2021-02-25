@@ -25,8 +25,8 @@
  */
 
 $dir = "/var/www/html/supermon/";
-$db = $dir . "astdb.txt";
-$privatefile = $dir . "privatenodes.txt";
+$db = "/var/log/asterisk/astdb.txt";
+$privatefile = $dir."privatenodes.txt";
 
 $retries = 0;
 $Pcontents = '';
@@ -42,7 +42,7 @@ $url = "http://allmondb.allstarlink.org/";
 // Private nodes are less than 2000 and loaded first
 // to ensure proper order of file
 if (file_exists($privatefile)) {
-   $Pcontents .= file_get_contents($privatefile);
+    $Pcontents .= file_get_contents($privatefile);
 }
 
 // Check if ONLY private nodes
@@ -50,44 +50,44 @@ if (file_exists($privatefile)) {
 // Maintains compatibility with pre 1.3 versions
 // assumes empty environment variable
 if (is_null($private) || !$private) {  // If not a private node...
-   // If called by cron wait between 0 and 30 min
-   if (isset($argv[1]) && $argv[1] == 'cron') {
-      $seconds = mt_rand(0, 1800);
-      print "Waiting for $seconds seconds...\n";
-      while ($seconds > 0) {
-         if ($seconds > 60) {
-            print "Sleeping for $seconds seconds...\n";
-            sleep(60);
-            $seconds = $seconds - 60;
-         } else {
-            print "Sleeping for $seconds seconds...\n";
-            sleep($seconds);
-            $seconds = 0;
-         }
-      }
-   }
+    // If called by cron wait between 0 and 30 min
+    if (isset($argv[1]) && $argv[1] == 'cron') {
+        $seconds = mt_rand(0, 1800);
+        print "Waiting for $seconds seconds...\n";
+        while ($seconds > 0) {
+            if ($seconds > 60) {
+                print "Sleeping for $seconds seconds...\n";
+                sleep(60);
+                $seconds = $seconds - 60;
+            } else {
+                print "Sleeping for $seconds seconds...\n";
+                sleep($seconds);
+                $seconds = 0;
+            }
+        }
+    }
 
-   while (true) {
-      // Open AllStar db URL and retrieve file.
-      $contents2 = @file_get_contents($url);
+    while (true) {
+        // Open AllStar db URL and retrieve file.
+        $contents2 = @file_get_contents($url);
 
-      // Test size.
-      $size = strlen($contents2);
-      if ($size < 300000) {
+        // Test size.
+        $size = strlen($contents2);
+        if ($size < 300000) {
+            #if ($retries >= 2)
+            #   $url = $url2;
 
-         #if ($retries >= 2)
-         #   $url = $url2;
+            if ($retries >= 5) {
+                die ("astdb.txt: Retries exceeded!!  $size bytes - Invalid: file too small, bailing out.\n");
+            }
 
-         if ($retries >= 5)
-            die ("astdb.txt: Retries exceeded!!  $size bytes - Invalid: file too small, bailing out.\n");
-
-         $retries++;
-         print "Retry $retries of 5. Will retry $url\n";
-         sleep (5);
-      } else {
-         break;
-      }
-   }
+            $retries++;
+            print "Retry $retries of 5. Will retry $url\n";
+            sleep(5);
+        } else {
+            break;
+        }
+    }
 } // End private node check
 
 $contents = $Pcontents;
@@ -97,15 +97,15 @@ $contents .= $contents2;
 $contents = preg_replace('/[\x00-\x09\x0B-\x0C\x0E-\x1F\x7F-\xFF]/', '', $contents);
 
 // Save the data
-if (! ($fh = fopen($db, 'w'))) {
-   die("Cannot open $db.");
+if (!($fh = fopen($db, 'w'))) {
+    die("Cannot open $db.");
 }
-if (!flock($fh, LOCK_EX))  {
-   echo 'Unable to obtain lock.';
-   exit(-1);
+if (!flock($fh, LOCK_EX)) {
+    echo 'Unable to obtain lock.';
+    exit(-1);
 }
-if (fwrite($fh, $contents) === FALSE) {
-   die ("Cannot write $db.");
+if (fwrite($fh, $contents) === false) {
+    die ("Cannot write $db.");
 }
 fclose($fh);
 

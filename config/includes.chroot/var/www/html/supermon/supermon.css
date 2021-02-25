@@ -22,10 +22,10 @@
     margin: 1px 0px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-/* Background definitions are in global.inc - Do not change here */
-/*    background-color: blue; */
-/*    background-image: url("background.jpg"); */
-/*    height: 124px; */
+    /* Background definitions are in global.inc - Do not change here */
+    /*    background-color: blue; */
+    /*    background-image: url("background.jpg"); */
+    /*    height: 124px; */
 }
 
 #headerTitle {
@@ -114,13 +114,13 @@
     top: 36px;
     left: 11px;
     font-size: 14px;
-    font-family: Verdana,Arial,sans-serif;
+    font-family: Verdana, Arial, sans-serif;
     color: lightgray;
 }
 
 #headerLogin a:link {
     text-decoration: none;
-    color: lightgray;    
+    color: lightgray;
 }
 
 #headerLogin a:visited {
@@ -145,7 +145,7 @@
     border-bottom-right-radius: 10px;
     background-color: darkblue;
     font-size: 15px;
-    font-family: Verdana,Arial,sans-serif;
+    font-family: Verdana, Arial, sans-serif;
 }
 
 #menu a {
@@ -203,7 +203,7 @@
     position: absolute;
     background-color: darkblue;
     min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 5;
 }
 
@@ -232,7 +232,7 @@ table.rtcm {
     border-collapse: collapse;
     border: 1px solid black;
     padding: 5px;
-    font-family: verdana,arial,sans-serif;
+    font-family: verdana, arial, sans-serif;
 }
 
 table.rtcm tr {
@@ -251,7 +251,7 @@ table.rtcm th {
 }
 
 table.gridtable {
-    font-family: verdana,arial,sans-serif;
+    font-family: verdana, arial, sans-serif;
     font-size: 12px;
     color: black;
     padding: 4px;

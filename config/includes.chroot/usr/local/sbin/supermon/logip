@@ -1,0 +1,55 @@
+#!/bin/bash
+#
+# logip [-d (Debug)] | [-h]
+#
+# Author: Paul Aidukas KN2R (Copyright) June, 2016
+# Log dynamic public WAN IP changes
+# For ham radio use only, NOT for commercial use!
+#
+# June-02-2016  Paul/KN2R  Initial release.
+# Sept-09-2016  Paul/KN2R  Changed to new date format.
+#
+#######################################################
+
+LOGFILE="/tmp/iplog.txt"
+
+USAGE () {
+    echo
+    echo "Usage: `basename $0` [-d (Debug)] | [-h]"
+    echo
+    echo "       -d  Display verbose Debug output."
+    echo "       -h  Display this really useful Help message ;)"
+    echo; exit
+}
+
+[ "$1" == "-h" ] && USAGE
+
+if ! [ -e $LOGFILE ]; then
+    echo -e "\nNetwork dynamic WAN IP change log:" > $LOGFILE
+    echo "------- ------- --- -- ------ ----" >> $LOGFILE
+fi
+
+LASTIP=`tail -1 $LOGFILE |cut -d" " -f6-`
+MYIP=`wget -t 3 -T 5 -q -O- http://checkip.dyndns.org:8245 |cut -d":" -f2 |cut -d" " -f2 |cut -d"<" -f1 |sed 's/ +//g'`
+
+if [ "$LASTIP" != "$MYIP" ]; then
+    DATE=`date '+%b %d %T %Z %Y'`
+    if [ -z "$MYIP" -a "$LASTIP" != "(No IP, network down)" ]; then
+        MYIP="(No IP, network down)"
+    fi
+    [ -n "$MYIP" ] && echo "$DATE $MYIP" >> $LOGFILE
+fi
+
+if [ "$1" == "-d" ]; then
+    cat $LOGFILE
+    echo
+    echo "  LAST IP = $LASTIP"
+    echo "CURENT IP = $MYIP"
+fi
+
+if [ "$LASTIP" != "$MYIP" ]; then
+    [ "$1" == "-d" ] && echo
+  else
+    [ "$1" == "-d" ] && echo -e "\nNo change.\n"
+fi
+

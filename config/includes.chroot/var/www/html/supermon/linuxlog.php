@@ -1,4 +1,5 @@
 <?php
+
 include("session.inc");
 include("common.inc");
 
@@ -10,20 +11,20 @@ include("common.inc");
 ?>
 <html>
 <head>
-<title>Linux messages Log</title>
+  <title>Linux messages Log</title>
 </head>
 <body>
 <pre>
 <?php
-	if ($_SESSION['sm61loggedin'] === true) {
-		$cmd = "$SUDO $JOURNALCTL --no-pager --since \"1 day ago\" | $SED -e \"/sudo/ d\"";
-		//$cmd = "sudo journalctl --no-pager --since \"1 day ago\"";
-                echo "Command: $cmd\n-----------------------------------------------------------------\n";
-                passthru ($cmd);
-                echo "\n\n";
-
-	} else
-		echo ("<br><h3>ERROR: You Must login to use this function!</h3>");
+if ($_SESSION['sm61loggedin'] === true) {
+    $cmd = "$SUDO $JOURNALCTL --no-pager --since \"1 day ago\" | $SED -e \"/sudo/ d\"";
+    //$cmd = "sudo journalctl --no-pager --since \"1 day ago\"";
+    echo "Command: $cmd\n-----------------------------------------------------------------\n";
+    passthru($cmd);
+    echo "\n\n";
+} else {
+    echo("<br><h3>ERROR: You Must login to use this function!</h3>");
+}
 ?>
 </pre>
 </body>

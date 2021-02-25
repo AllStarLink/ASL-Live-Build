@@ -1,0 +1,163 @@
+#!/bin/bash
+#
+# Program: smlogger (Supermon Logger)
+# Author: Paul Aidukas KN2R (Copyright) April 27, 2013
+# For ham radio use only, NOT for commercial use!
+#
+# Supermon 6+ AllStarLink/IRLP/EchoLink connection Logging.
+# This script is run by app_rpt using connpgm= and discpgm= parameters.
+#
+# Place these two lines in rpt.conf for each node you want to log:
+#   connpgm=/usr/local/sbin/supermon/smlogger 1
+#   discpgm=/usr/local/sbin/supermon/smlogger 0
+#
+# 27-Apr-2013  Paul/KN2R  Initial release.
+# 18-Nov-2017  Paul/KN2R  Added INbound and OUTbound info.
+# 04-Feb-2018  David/KB4FXC  Minor path and function changes.
+# 17-Feb-2018  Paul/KN2R  Changed EchoLink data retrieval.
+# 17-Apr-2019  Paul/KN2R  Now differentiates Phone Portal from IaxRpt.
+# 15-Aug-2019  Paul/KN2R  Added support for new NNX node numbers.
+#
+########################################################################
+Prgm=`basename $0`
+
+# Node numbers to ignore (optional):
+#[ "$3" = "0" ] && exit
+# none
+
+if [ "$1" == "" -o "$2" == "" -o "$3" == "" ]; then
+   echo -e "\nERROR: missing required parameters."
+   echo -e "\nUsage: $Prgm <1|0> <local node#> <remote node#>\a\n"
+   exit
+fi
+
+PID=$$; INOUT="=v="
+SMLTEMP=/tmp/SMLTEMP
+
+function cleanup {
+   echo "Removing temp files"
+   rm -f ${SMLTEMP}.${PID}
+}
+trap cleanup EXIT
+
+DATE=`date '+%a %b %d %T %Z %Y'`
+EXTNODES=/tmp/rpt_extnodes
+ALLMONDIR=/var/www/html/supermon
+LOGFILE=/var/log/asterisk/connectlog
+NODELIST=/var/log/asterisk/astdb.txt
+ALLMONBIN=/usr/local/sbin/supermon
+IRLPLOOKUP=${ALLMONBIN}/irlplookup
+
+if [ "$3" -eq "$3" ] 2>/dev/null; then
+   TYPE=""
+ else
+   NODENO=$3; TYPE="Callsign"
+   # Differentiate clients:
+   if [ `echo "$NODENO" |egrep -c "\-P"` -gt 0 ]; then
+      ASTINFO="AllStar Phone Portal user"
+    else 
+      ASTINFO="IaxRpt or Web Transceiver client"
+   fi
+fi
+
+COUNT=$(echo $3 |wc -m); COUNT=$(( $COUNT - 1 ))
+
+if [ "$TYPE" != "Callsign" -a "$COUNT" == 7 ]; then
+   TYPE="EchoLink"
+fi
+
+if [ "$TYPE" != "Callsign" -a "$COUNT" == 3 ]; then
+   NODENO=$3; TYPE="Extension"
+fi
+
+[ $1 == 0 ] && STATUS="Disconnected"
+
+if [ "$COUNT" == 7 -a "$TYPE" != "Callsign" ]; then
+   TYPE="EchoLink"
+   NODENO=`echo "$3"`
+   [ $NODENO -gt 3000000 ] && let NODENO-=3000000
+   /usr/sbin/asterisk -rx "echolink dbget nodename $NODENO" |awk -F "|" '{printf ("%s [EchoLink '"$NODENO"'] (%s)",$2,$3);}' > ${SMLTEMP}.${PID}
+   ECHOINFO=$(<${SMLTEMP}.${PID})
+   if [[ "$ECHOINFO" =~ "Error" ]]; then
+      ECHOINFO=""
+   fi
+fi
+
+if [ "$TYPE" != "Callsign" -a "$TYPE" != "EchoLink" ]; then
+   if [ $3 -lt 90000 -a $3 -gt 80000 ]; then
+      NODENO=$(echo $3 |cut -c 2-); NODENO2=$NODENO
+      if [ $NODENO -ge 9000 ]; then
+         NODENO2=$(echo $3 |cut -c 1-3); NODENO2=$NODENO2"0"
+      fi
+      TYPE="IRLP"
+      $IRLPLOOKUP $3 > ${SMLTEMP}.${PID}
+      IRLPINFO=$(<${SMLTEMP}.${PID})
+      IRLPIP=`egrep -i stn${NODENO2} /home/irlp/custom/hosts |awk -F" " '{print $1}'`
+      [ -z "$IRLPIP" ] && IRLPIP=`egrep -i ref${NODENO2} /home/irlp/custom/hosts |awk -F" " '{print $1}'`
+      if [[ "$IRLPINFO" =~ "Error" ]]; then
+         IRLPINFO=""
+      fi
+      [ -n "$IRLPIP" ] && IRLPINFO=${IRLPINFO}" (${IRLPIP})"
+   fi
+fi
+
+# if [ "$TYPE" != "Callsign" -a "$TYPE" != "IRLP" -a "$COUNT" == 4 -o "$TYPE" != "Callsign" -a "$TYPE" != "IRLP" -a "$COUNT" == 5 ]; then
+
+if [ "$TYPE" != "Callsign" -a "$TYPE" != "EchoLink" -a "$TYPE" != "IRLP" -a "$COUNT" -gt 3 ]; then
+   TYPE="AllStar"; NODENO=$3
+   ASTINFO=`grep ^"$3|" $NODELIST |sed 's/|/ /g' |sed 's/'$3'//'`
+fi
+
+if [ $3 == 0 ]; then
+   TYPE="AllStar"
+   ASTINFO=`grep ^"$3|" $NODELIST |sed 's/|/ /g'`
+fi
+
+if [ "$GET_NODELIST_UPDATES" = "enabled" -a "$TYPE" = "AllStar" -a $3 -ne 0 ]; then
+   grep -F "$NODENO=radio" "$EXTNODES" |head -1 > "${SMLTEMP}.${PID}"
+   ASTNODEIP=$(cut -f2 -d"," "${SMLTEMP}.${PID}")
+   [ -n "$ASTNODEIP" ] && ASTNODEIP="(${ASTNODEIP})"
+   if [[ "$ASTINFO" =~ "Error" ]]; then
+      ASTINFO=""
+   fi
+   ASTINFO="$ASTINFO $ASTNODEIP"
+fi
+
+if [ "$GET_NODELIST_UPDATES" != "enabled" -a "$TYPE" = "AllStar" -a $3 -ne 0 ]; then
+   Ans1=`/bin/asterisk -rx "rpt lookup $3" |grep $3"," |head -1 |awk -F " " '{print $8}' |sed 's/radio@//' |awk -F "/" '{print $1}' |awk -F ":" '{print $1}'`
+   Ans2=`/usr/local/sbin/dns-query $3 |grep $3"," |head -1 |awk -F ":" '{print $2}' |awk -F "/" '{print $1}'`
+   [ -n "$Ans2" ] && Ans2=":${Ans2}"
+   [ -n "$Ans1" ] && ASTNODEIP="(${Ans1}${Ans2})"
+   if [[ "$ASTINFO" =~ "Error" ]]; then
+      ASTINFO=""
+   fi
+   ASTINFO="$ASTINFO $ASTNODEIP"
+fi
+
+ASTINFO=`echo $ASTINFO |sed 's/'$3'//'`
+
+if [ "$TYPE" = "EchoLink" -o "$TYPE" = "IRLP" ]; then
+   chkINOUT=`/usr/sbin/asterisk -rx "rpt lstats $2" |grep ^"$3 " |awk '{print $3}'`
+ else
+   chkINOUT=`/usr/sbin/asterisk -rx "rpt lstats $2" |grep ^"$3 " |awk '{print $4}'`
+fi
+[ "$chkINOUT" = "OUT" ] && INOUT="=OUT=>"
+[ "$chkINOUT" = "IN" ] && INOUT="<=IN=="
+
+if [ $1 == "1" ]; then
+   STATUS="Connected"
+fi
+
+[ "$TYPE" = "IRLP" ] && echo "IRLP Info:" $STATUS $INOUT $IRLPINFO
+[ "$TYPE" = "EchoLink" ] && echo "EchoLink Info:" $STATUS $INOUT $ECHOINFO
+[ "$TYPE" = "AllStar" ] && echo "AllStar Info:" $STATUS $INOUT $3 $ASTINFO
+[ "$TYPE" = "Extension" ] && echo "Extension Info:" $STATUS $INOUT $3
+
+LOGINFO=`echo $DATE "==" $2 $STATUS $TYPE $3 $INOUT ${ASTINFO}${ECHOINFO}${IRLPINFO} |sed 's/|/ /g'`
+echo $LOGINFO |sed 's/ +/ /g' >> $LOGFILE
+
+trap - EXIT
+cleanup
+
+exit 0
+

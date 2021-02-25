@@ -1,0 +1,7 @@
+Cmnd_Alias ASTERISK = /usr/sbin/asterisk, /bin/reboot, /bin/killall, /bin/top, \
+  /usr/local/sbin/supermon/echolookup*, /usr/local/sbin/supermon/irlplookup, \
+  /usr/local/sbin/supermon/astlookup, /usr/local/sbin/supermon/astst, \
+  /usr/local/sbin/supermon/ssinfo, /usr/sbin/astup.sh, /usr/sbin/astdn.sh, \
+  /usr/bin/journalctl, /usr/bin/rm, /usr/bin/sync
+User_Alias ADMINS = www-data
+ADMINS ALL = NOPASSWD: ASTERISK

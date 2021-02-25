@@ -31,7 +31,8 @@ $BACKGROUND_HEIGHT = "124px";
 $REFRESH_DELAY = "21600";
 //
 // Show number of core dump files that may exist, IF any
-;$SHOW_COREDUMPS = "yes";
+;
+$SHOW_COREDUMPS = "yes";
 //
 // Show weather conditions and temperature for Zip code area
 $LOCALZIP = "33904";

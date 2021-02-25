@@ -1,4 +1,5 @@
 <?php
+
 include("session.inc");
 include("global.inc");
 include("common.inc");
@@ -11,17 +12,18 @@ include("common.inc");
 ?>
 <html>
 <head>
-<title>Web Server access_log</title>
+  <title>Web Server access_log</title>
 </head>
 <body>
 <pre>
 <?php
-	if ($_SESSION['sm61loggedin'] === true) {
-		$file = $WEB_ACCESS_LOG; 	// Defined in global.inc
-		echo "File: $file\n-----------------------------------------------------------------\n";
-		echo file_get_contents($file);
-	} else
-		echo ("<br><h3>ERROR: You Must login to use this function!</h3>");
+if ($_SESSION['sm61loggedin'] === true) {
+    $file = $WEB_ACCESS_LOG;  // Defined in global.inc
+    echo "File: $file\n-----------------------------------------------------------------\n";
+    echo file_get_contents($file);
+} else {
+    echo("<br><h3>ERROR: You Must login to use this function!</h3>");
+}
 ?>
 </pre>
 </body>

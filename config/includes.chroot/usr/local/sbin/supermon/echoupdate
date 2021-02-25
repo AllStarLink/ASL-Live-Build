@@ -1,0 +1,28 @@
+#!/bin/bash
+#
+# Paul Aidukas, KN2R - 29-Feb-2017
+# Update EchoLink database for SuperMon.
+#
+# 05-Feb-2018 David/KB4FXC many changes.
+#
+##########################################
+
+PID=$$
+ELDB_DB=/tmp/echolink.db
+
+# EchoLink database:
+if [ -e /etc/asterisk/echolink.conf ]; then
+	asterisk -rx 'echolink dbdump' > ${ELDB_DB}.${PID}
+	LEN=$(wc -l ${ELDB_DB}.${PID} | awk '{print $1}')
+	if [ $LEN -gt 100 ] ; then
+		echo LENGTH = $LEN
+		mv ${ELDB_DB}.${PID} ${ELDB_DB}
+		gzip -f ${ELDB_DB}
+		echo "File 'echolink.db' updated."
+	else
+		rm -f "${ELDB_DB}.${PID}"
+	fi
+else
+	echo "EchoLink is not configured, aborting."
+fi
+

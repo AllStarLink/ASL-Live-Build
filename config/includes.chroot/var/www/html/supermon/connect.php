@@ -1,9 +1,10 @@
 <?php
+
 include('session.inc');
 include('amifunctions.inc');
 
 if ($_SESSION['sm61loggedin'] !== true) {
-        die("Please login to use connect/disconnect functions.\n");
+    die("Please login to use connect/disconnect functions.\n");
 }
 
 // Filter and validate user input
@@ -16,7 +17,7 @@ $localnode = @trim(strip_tags($_POST['localnode']));
 //    die("Please provide remote node number.\n");
 //}
 
-if (! preg_match("/^\d+$/",$localnode)) {
+if (!preg_match("/^\d+$/", $localnode)) {
     die("Please provide local node number.\n");
 }
 
@@ -29,11 +30,11 @@ $config = parse_ini_file('allmon.ini', true);
 
 // Open a socket to Asterisk Manager
 $fp = AMIconnect($config[$localnode]['host']);
-if (FALSE === $fp) {
-	die("Could not connect.\n\n");
+if (false === $fp) {
+    die("Could not connect.\n\n");
 }
-if (FALSE === AMIlogin($fp, $config[$localnode]['user'], $config[$localnode]['passwd'])) {
-	die("Could not login.");
+if (false === AMIlogin($fp, $config[$localnode]['user'], $config[$localnode]['passwd'])) {
+    die("Could not login.");
 }
 
 // Which ilink command?
@@ -73,7 +74,7 @@ if ($button == 'connect') {
 
 #exit;
 
- $AMI1 = AMIcommand ($fp, "rpt cmd $localnode ilink $ilink $remotenode");
+$AMI1 = AMIcommand($fp, "rpt cmd $localnode ilink $ilink $remotenode");
 
 
 ?>

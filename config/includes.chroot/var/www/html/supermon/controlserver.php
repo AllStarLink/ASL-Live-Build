@@ -1,4 +1,5 @@
 <?php
+
 include('amifunctions.inc');
 
 #print_r($_GET);
@@ -18,12 +19,12 @@ if (!isset($config[$node])) {
 
 // Set up connection
 $fp = AMIconnect($config[$node]['host']);
-if (FALSE === $fp) {
+if (false === $fp) {
     die("Could not connect to host.");
 }
 
 // Login 
-if (FALSE === AMIlogin($fp, $config[$node]['user'], $config[$node]['passwd'])) {
+if (false === AMIlogin($fp, $config[$node]['user'], $config[$node]['passwd'])) {
     die("Could not login.");
 }
 
@@ -31,10 +32,10 @@ if (FALSE === AMIlogin($fp, $config[$node]['user'], $config[$node]['passwd'])) {
 $cmdString = preg_replace("/%node%/", $node, $cmd);
 
 // AMI needs an ActionID so we can find our own response
-$actionRand = mt_rand(); 
-$actionID = 'cpAction_' . $actionRand;
+$actionRand = mt_rand();
+$actionID = 'cpAction_'.$actionRand;
 
-if ((@fwrite($fp,"ACTION: COMMAND\r\nCOMMAND: $cmdString\r\nActionID: $actionID\r\n\r\n")) > 0 ) {
+if ((@fwrite($fp, "ACTION: COMMAND\r\nCOMMAND: $cmdString\r\nActionID: $actionID\r\n\r\n")) > 0) {
     $rptStatus = AMIget_response($fp, $actionID);
     print "<pre>\n===== $cmdString =====\n";
     print $rptStatus;

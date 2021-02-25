@@ -1,0 +1,35 @@
+#!/bin/bash
+#
+# Author: Paul Aidukas/KN2R (Copyright) Jan 13, 2013
+# EchoLink lookup v1.0 for Allstar Monitor/Manager
+# For ham radio use only, NOT for commercial use!
+#
+# Jan-13-2013  Initial release.
+# Feb-15-2015  Modified to get callsign info fast from data file!
+# Feb-17-2018  Modified to use new .gz data file.
+#
+#################################################################
+
+TTY=xterm
+TERM=xterm
+
+ECHOLINK_DB="/tmp/echolink.db.gz"
+
+Arg=`echo "$1"`
+if [ -z "$Arg" ]; then echo -e "\nNo Node # supplied.\n\a"; exit; fi
+[ $Arg -gt 3000000 ] && let Arg-=3000000
+
+Bar="\|"
+Ans=`zcat $ECHOLINK_DB |egrep -e ^${Arg}${Bar}`
+Ans1=`echo "$Ans" |awk -F "|" '{print $2}'`
+[ -z "$Ans" ] && Ans1="No-Info..."
+
+Ans2=`echo "$Ans" |awk -F "|" '{print $3}'`
+[ -n "$Ans2" ] && Ans2="(${Ans2})"
+
+Arg=`echo $Arg |tr '[:lower:]' '[:upper:]'`
+
+echo "$Ans1 [EchoLink $Arg] $Ans2"
+
+exit 0
+

@@ -172,7 +172,7 @@ print "<p class=\"header2\" style=\"margin-top:.5em;\"></center>";
 if ($command ne "") {
   print "Command = ",$command," - ";
 }
-print "<a href=\"http://stats.allstarlink.org/getstatus.cgi?$node\">View this Node Graphically</a>&nbsp;&nbsp;&nbsp;<a href=\"/lsnodes/lsnodes_form.php?node=$node\">Search/Command another Node</a></p></div>";
+print "<a href=\"http://stats.allstarlink.org/stats/$node/networkMap\">View this Node Graphically</a>&nbsp;&nbsp;&nbsp;<a href=\"/lsnodes/lsnodes_form.php?node=$node\">Search/Command another Node</a></p></div>";
 #
 #  Print display tables
 print "<div id=\"left_table\" class=\"left\">";

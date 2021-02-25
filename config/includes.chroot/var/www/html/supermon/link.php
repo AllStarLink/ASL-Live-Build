@@ -511,8 +511,8 @@ foreach ($nodes as $node) {
             }
         }
     } else {
-        $nodeURL = "http://stats.allstarlink.org/nodeinfo.cgi?node=$node";
-        $bubbleChart = "http://stats.allstarlink.org/getstatus.cgi?$node";
+        $nodeURL = "http://stats.allstarlink.org/stats/$node";
+        $bubbleChart = "http://stats.allstarlink.org/stats/$node/networkMap";
         $title = "&nbsp; Node <a href=\"$nodeURL\" target=\"_blank\">$node</a> => $info &nbsp;";
         $title .= "&nbsp; <a href=\"$bubbleChart\" target=\"_blank\" id=\"bubblechart\">Bubble Chart</a> &nbsp;";
         if (isset($config[$node]['lsnodes'])) {

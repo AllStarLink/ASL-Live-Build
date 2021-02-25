@@ -14,10 +14,10 @@ $node = @trim(strip_tags($_POST['node']));
 $localnode = @trim(strip_tags($_POST['localnode']));
 
 if ($node == '') {
-    $url = "<script>window.open('http://stats.allstarlink.org/getstatus.cgi\?$localnode')</script>";
+    $url = "<script>window.open('http://stats.allstarlink.org/stats/$localnode/networkMap')</script>";
     echo $url;
 } else {
     print "<b>Opening Bubble Chart for node $node</b>";
-    $url = "<script>window.open('http://stats.allstarlink.org/getstatus.cgi\?$node')</script>";
+    $url = "<script>window.open('http://stats.allstarlink.org/stats/$node/networkMap')</script>";
     echo $url;
 }

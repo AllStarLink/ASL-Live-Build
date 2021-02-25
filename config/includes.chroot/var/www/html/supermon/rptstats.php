@@ -20,7 +20,7 @@ if ($_SESSION['sm61loggedin'] === true && $node > 0) {
 
 if ($_SESSION['sm61loggedin'] === true) {
     if ($node) {
-        echo file_get_contents("http://stats.allstarlink.org/nodeinfo.cgi?node=$node");
+        echo file_get_contents("http://stats.allstarlink.org/stats/$node");
     } else {
         ?>
       <html>

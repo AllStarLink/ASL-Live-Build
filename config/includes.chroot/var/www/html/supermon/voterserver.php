@@ -147,7 +147,7 @@ function printNode($nodeNum, $nodes, $voted, $config)
     if (@$config['hideNodeURL'] == 1) {
         $message .= "<table class='rtcm'><tr><th colspan=2><i> &nbsp; Node $nodeNum - $info &nbsp; </i></th></tr>";
     } else {
-        $nodeURL = "http://stats.allstarlink.org/nodeinfo.cgi?node=$nodeNum";
+        $nodeURL = "http://stats.allstarlink.org/stats/$nodeNum";
         $message .= "<table class='rtcm'><tr><th colspan=2><i> &nbsp; Node <a href=\"$nodeURL\" target=\"_blank\">$nodeNum</a> - $info &nbsp; </i></th></tr>";
     }
     $message .= "<tr><th>Client</th><th>RSSI</th></tr>";

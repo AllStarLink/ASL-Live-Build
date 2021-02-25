@@ -8,6 +8,7 @@ reallyclean:
 	sudo mkdir -p chroot/etc
 	sudo lb clean
 clean:
+	sudo rm -f asl-*.*
 	sudo lb clean
 config:
 	sudo lb config

@@ -24,6 +24,8 @@ v4l-utils
 avahi-daemon
 lua5.1
 luajit
+libsndfile1-dev
+sox
 hardlink
 ca-certificates
 curl

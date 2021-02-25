@@ -1,0 +1,35 @@
+#!/bin/sh
+
+# Call with a number argument to do only most recent N stories
+
+rm -rf o drnews.txt [0-9]*.txt shell-article-list
+./drnews.php > /dev/null
+
+#SPEEDS="30 40 45"
+SPEEDS="35"
+
+
+# call process FILENAME TITLE DATESTAMP
+process() {
+  NR=`echo $1 | cut -f1 -d.`
+  TITLETAG=`echo $2 | iconv -f utf-8 -t iso-8859-1`
+
+  TMPFILE=$NR-$SPEED.wav
+  rm -f $TMPFILE
+  ../../cwwav -O wav -s -p 0.4 -e 8 -f 660 -w $SPEED -o $TMPFILE $1
+  lame --preset cbr 32 --clipdetect --scale .6 --cbr -b 16 -q 9 -m s --tn "01" --tt "$TITLETAG" --ta "dr.dk" --tl "Nyheder $SPEED WPM" $TMPFILE o/$a/$NR-DR-Nyheder.mp3
+  rm $TMPFILE
+}
+
+if [ "$1" != "" ]; then
+  head -n $1 shell-article-list > s1
+else
+  cp shell-article-list s1
+fi
+
+for a in $SPEEDS; do
+  mkdir -p o/$a
+  (SPEED=$a . ./s1) &
+done
+wait
+rm -f tmp*.wav [0-9]*.txt s1

@@ -1,0 +1,17 @@
+#!/bin/bash
+
+if [ "$1" == "-h" ] || [ "$1" == "" ]; then
+    echo "tomorse: uses cwwav to output morse code wav files. Then uses sox to format them properly"
+    echo
+    echo "example:"
+    echo "tomorse \"KK9ROB\""
+    echo 
+    echo "After the file has been created, move it to /var/lib/asterisk/sounds/rpt"
+    echo
+    exit
+fi
+
+echo $@ | cwwav -r 8000 -w 20 -o /tmp/cwwav.tmp
+echo "Outputting to $1.wav"
+sox -v 0.25 /tmp/cwwav.tmp -c 1 -r 8000 "$1.wav"
+

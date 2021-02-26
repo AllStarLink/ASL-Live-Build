@@ -25,14 +25,15 @@ do_set_root_passwd() {
 ANSWER=1
         if (whiptail --title "First-time" --yesno "Welcome to AllstarLink first-time setup. \
         \nThis script will walk you through a few of the basic system setup options. \
-        \nThe root login is disabled for SSH and CONSOLE login. \
-        \nBy setting the root password you will allow root to login on the console. \
-        \nWould you like to set the root password?" --defaultno 20 80) then
+        \nThe root login is disabled for SSH and CONSOLE login.\n\
+        \nHowever, the repeater user's password is set to default. If you forward your SSH port, \
+        \nthis may allow attackers to use the default credentials.\n \
+        \nWould you like to set the repeater password?" --defaultno 20 80) then
          ANSWER=$?
         fi
         if [ "$ANSWER" = "0" ]; then    # answered yes
-# no options to pretty up the display for this part
-                while ! passwd root
+                # no options to pretty up the display for this part
+                while ! passwd $REALID
                 do
                         whiptail --msgbox "ERROR: A valid password must be assigned to continue" 20 80 2
                 done
@@ -133,7 +134,6 @@ do_finish() {
 do_check_if_firsttime
 do_is_root
 do_set_root_passwd
-do_set_mypasswd
 do_set_timezone
 do_set_host
 do_net_setup

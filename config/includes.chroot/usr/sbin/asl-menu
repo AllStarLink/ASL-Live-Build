@@ -49,7 +49,7 @@ CONFIGS=/etc/asterisk
 WEBROOT=/var/www/html
 TMP=/tmp
 
-FAIL2BANFILE=/etc/fail2ban/jail.local
+FAIL2BANFILE=/etc/fail2ban/jail.d/allstar.conf
 #FIREWALLFILE=/etc/iptables.conf
 FIREWALLFILE=/etc/iptables/rules.v4
 

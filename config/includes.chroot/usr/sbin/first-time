@@ -2,8 +2,8 @@
 
 # original by N4IRS 07/26/2017
 # mod4whip by N8THN
-# V1.0 Feb 23
-#release date 20180323-1
+# Fixes by K6JWN and KK9ROB 02/25/2021
+# V2.0 Feb 25
 
 do_check_if_firsttime() {
 if [ -e /etc/asterisk/firsttime ]; then

@@ -54,7 +54,7 @@ echo "doing do_create_tmp_env" >> $logfile
         cp -f $CONFIGS/simpleusb.conf $TMP/simpleusb.conf.tmp
         cp -f $CONFIGS/voter.conf $TMP/voter.conf.tmp
         CURRENT_NODE=$(grep -o '^\[[0-9]*\]' $TMP/rpt.conf.tmp | sed 's/.*\[\([^]]*\)\].*/\1/g')
-        CURRENT_REG1=$(grep 'register =' $TMP/iax.conf.tmp | awk -F'=' '{print $2}' | awk -F'   ;' '{print $1}')
+        CURRENT_REG1=$(grep 'register=' $TMP/iax.conf.tmp | awk -F'=' '{print $2}' | awk -F'   ;' '{print $1}')
         CURRENT_REG=$(echo "$CURRENT_REG1" | awk -F'@' '{print $1}')
         CURRENT_REG_NODE=$(echo "$CURRENT_REG" | awk -F':' '{print $1}')
         CURRENT_REG_PSWD=$(echo "$CURRENT_REG" | awk -F':' '{print $2}')

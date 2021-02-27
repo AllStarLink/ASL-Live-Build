@@ -1,4 +1,5 @@
 #!/bin/bash
 
+mkdir -p /home/repeater
 echo >> /home/repeater/.bashrc
 echo "alias first-time='sudo /usr/sbin/first-time'" >> /home/repeater/.bashrc

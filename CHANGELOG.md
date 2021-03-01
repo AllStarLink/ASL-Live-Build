@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0-beta.5] - 2021-02-27
+
+* Change default hangtimes to favor simplex nodes in rpt.conf
+* Add bashrc alias for `first-time` script to work without sudo
+* Fix Register string behavior weirdness in asl-menu
+* Add tomorse script to convert text to morse code wav files. Morse code generation in ASL isn't always consistent, so allowing static generation fixes this. use `tomorse -h` for help.
+* Don't bother with root password in `first-time` - just set `repeater`'s password.
+* Bring over sounds dir from ASL 1.01 Fix #10
+* Tweak menus and add `/etc/motd`
+* Add credits for contributors
+* Fix paths in asl-menu and first-time. Fix #12 and #13
+* Cleanup. Fix paths. Add CPANM and locate. Fix paths for astdb.txt.
+* Remove asl images on `make clean`
+* Fix greps for asterisk ports, ssh, and mylanip for supermon
+* Reformat code for supermon. Fix several paths to work on Debian 10. Add www user to sudo. Add extra supermon scripts. Add config file for apache2 cgi-bin. Fix #9.
+
 ## [2.0.0-beta.4] - 2021-02-18
 
 * Use log2ram, tmpfs (memory) for /var/log to relieve SD card stress on Pi

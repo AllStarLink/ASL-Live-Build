@@ -1,3 +1,5 @@
 #!/bin/bash
 
 echo "alias first-time='sudo /usr/sbin/first-time'" >> /etc/bash.bashrc
+echo "alias asl-menu='sudo /usr/sbin/asl-menu'" >> /etc/bash.bashrc
+echo "alias ll='ls -l'" >> /etc/bash.bashrc

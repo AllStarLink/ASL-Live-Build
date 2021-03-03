@@ -67,6 +67,8 @@ fi
 
 # check for qemu-static
 
+echo $BUILDVER > config/includes.chroot/etc/asl_version
+
 lb config noauto \
     "${OPTIONS[@]}" \
     "${args}"

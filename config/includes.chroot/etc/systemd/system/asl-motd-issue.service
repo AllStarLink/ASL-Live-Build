@@ -1,0 +1,12 @@
+[Unit]
+Description=AllStar MOTD & Issue Updater
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/update-motd.sh
+
+[Install]
+WantedBy=multi-user.target⏎ 
+

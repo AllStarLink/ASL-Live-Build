@@ -1,7 +1,4 @@
 #!/bin/bash
 
-systemctl disable asl-asterisk
-systemctl enable asterisk
-
 rm /var/lib/asterisk/rpt_extnodes
 ln -s /tmp/rpt_extnodes /var/lib/asterisk/rpt_extnodes

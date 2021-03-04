@@ -1,1 +1,1 @@
-*/15 * * * * /usr/local/sbin/update-motd-issue.sh
+*/15 * * * * root /usr/local/sbin/update-motd-issue.sh

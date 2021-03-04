@@ -1,0 +1,3 @@
+#!/bin/bash
+
+systemctl enable asl-motd-issue.service 

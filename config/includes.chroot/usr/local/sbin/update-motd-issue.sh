@@ -34,3 +34,4 @@ ASL Version ${aslVersion}
 
 cat /etc/motd > /etc/issue
 
+exit 0

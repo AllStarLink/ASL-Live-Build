@@ -5,8 +5,7 @@ After=network-online.target
 
 [Service]
 Type=oneshot
-ExecStart=/usr/local/sbin/update-motd.sh
+ExecStart=/usr/local/sbin/update-motd-issue.sh
 
 [Install]
-WantedBy=multi-user.target⏎ 
-
+WantedBy=multi-user.target

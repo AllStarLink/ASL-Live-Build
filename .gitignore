@@ -25,6 +25,8 @@ asl-*amd64*
 
 config/build
 
+config/includes.chroot/etc/asl_version
+
 config/archives/*raspbian*
 config/archives/*Raspbian*
 config/archives/azlux*

@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0-beta.6] - 2021-03-24
+
+* Add dynamic MOTD on `/etc/issue` and `/etc/motd`
+* Move customizations to .deb packages (ASL-Asterisk)
+* Update versions in app_rpt
+* Bug fixes
+
 ## [2.0.0-beta.5] - 2021-02-27
 
 * Change default hangtimes to favor simplex nodes in rpt.conf

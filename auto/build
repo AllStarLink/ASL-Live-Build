@@ -5,6 +5,6 @@ set -e
 lb build noauto "${@}" 2>&1 | tee build.log
 
 # RPi Only
-if [ -f "$(cat config/build | grep ^Name:.*rpi | sed 's/^Name: \(.*\)$/\1/g')-armhf.img" ]; then
+if [ -f "$(cat config/build | grep ^Name:.*raspberrypi | sed 's/^Name: \(.*\)$/\1/g')-armhf.img" ]; then
     ./rpi_files/rpi_setup.sh
 fi

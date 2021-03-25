@@ -1,5 +1,10 @@
+APT::Periodic::Enable "1";
+APT::Periodic::Update-Package-Lists "1";
+APT::Periodic::Download-Upgradeable-Packages "1";
+APT::Periodic::AutocleanInterval "14";
+APT::Periodic::Unattended-Upgrade "1";
+
 Unattended-Upgrade::Origins-Pattern {
         "origin=AllStarLink";
         "site=apt.allstarlink.org";
 };
-

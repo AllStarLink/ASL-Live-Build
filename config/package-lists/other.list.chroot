@@ -57,3 +57,5 @@ php7.3-cli
 cpanminus
 locate
 msmtp
+unattended-upgrades
+apt-listchanges

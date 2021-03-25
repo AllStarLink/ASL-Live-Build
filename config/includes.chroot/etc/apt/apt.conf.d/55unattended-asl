@@ -1,0 +1,5 @@
+Unattended-Upgrade::Origins-Pattern {
+        "origin=AllStarLink";
+        "site=apt.allstarlink.org";
+};
+

@@ -1,0 +1,17 @@
+name: make_image
+on: 
+  workflow_dispatch:
+    inputs:
+      target:
+        type: choice
+        options: 
+        - pc
+        - rpi
+jobs:
+  make-images:
+    uses: AllStarLink/asl_workflows/.github/workflows/ephemeral_ec2_run-this.yml@develop
+    with:
+      run-this: ./docker/dockerbuild.sh -t ${{ inputs.arch }}
+      arch: ${{ inputs.target == 'pc' && 'x86_64' || inputs.target == 'rpi' && 'arm64' || null }}
+      artifact-path: 'asl-*.*(
+    secrets: inherit

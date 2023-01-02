@@ -22,6 +22,9 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -y install \
     wget \
     --no-install-recommends
 
+# hack to make live-build/debootstrap work in docker
+RUN sed -i '1161s%umount%#umount%' /usr/share/debootstrap/functions
+
 # add the allstarlink repo
 RUN echo "deb https://apt.allstarlink.org/repos/asl_builds buster main" > /etc/apt/sources.list.d/allstarlink.list
 RUN wget -O - https://apt.allstarlink.org/repos/repo_signing.gpg | apt-key add -

@@ -13,5 +13,5 @@ jobs:
     with:
       run-this: ./docker/dockerbuild.sh -t ${{ inputs.arch }}
       arch: ${{ inputs.target == 'pc' && 'x86_64' || inputs.target == 'rpi' && 'arm64' || null }}
-      artifact-path: 'asl-*.*(
+      artifact-path: 'asl-*.*'
     secrets: inherit

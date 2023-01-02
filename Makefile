@@ -1,5 +1,5 @@
 NAME = ASL-Live-Build
-.PHONY: buildpi
+.PHONY: buildpi build config configpi
 
 reallyclean:
 	rm -f asl-*.*

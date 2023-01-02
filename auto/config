@@ -10,7 +10,7 @@ if [[ " ${@} " =~ " build_rpi " ]]; then
   OPTIONS+=(
     --apt-http-proxy "http://127.0.0.1:3142"
     --architectures armhf 
-    --image-name asl-${BUILDVER}-kc1kcc-${BUILDDATE}-raspberrypi
+    --image-name asl-${BUILDVER}-${BUILDDATE}-rpi
     --binary-images hdd 
     --binary-filesystem ext4 
     --hdd-size 4096
@@ -44,11 +44,10 @@ else
     args=${@}
     OPTIONS+=(
     --architectures amd64
-    --image-name asl-${BUILDVER}-kc1kcc-${BUILDDATE}-intel
+    --image-name asl-${BUILDVER}-${BUILDDATE}-amd64
     --debootstrap-options "--keyring ./debian-archive-buster-stable.gpg --include=ca-certificates"
     --binary-images iso-hybrid
     --iso-application AllStarLink
-    --iso-preparer "KC1KCC and KK9ROB"
     --iso-publisher "AllStarLink, Inc."
     --iso-volume "ASL-${BUILDVER}"
     --debian-installer live

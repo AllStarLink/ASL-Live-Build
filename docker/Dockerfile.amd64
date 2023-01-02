@@ -1,0 +1,35 @@
+FROM amd64/debian:buster
+
+ARG USER_ID
+ARG GROUP_ID
+
+RUN addgroup --gid $GROUP_ID user; exit 0
+RUN adduser --disabled-password --gecos '' --uid $USER_ID --gid $GROUP_ID user; exit 0
+
+# Install build dependencies
+RUN apt-get update && apt-get -y install \
+    build-essential \
+    devscripts \
+    fakeroot \
+    debhelper \
+    automake \
+    autotools-dev \
+    pkg-config \
+    git \
+    ca-certificates \
+    qemu-user-static qemu-utils qemu-system-arm\
+    live-build debootstrap apt-cacher-ng \
+    wget \
+    --no-install-recommends
+
+# add the allstarlink repo
+RUN echo "deb https://apt.allstarlink.org/repos/asl_builds buster main" > /etc/apt/sources.list.d/allstarlink.list
+RUN wget -O - https://apt.allstarlink.org/repos/repo_signing.gpg | apt-key add -
+
+# Import entrypoint script
+COPY ./entrypoint.sh /entrypoint.sh
+
+# Make Executable
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]

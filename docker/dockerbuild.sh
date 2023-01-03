@@ -27,7 +27,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 PDIR=$(dirname $DIR)
 
 for T in $TARGETS; do
-       if [ $T == "rpi" ]
+       if [ $T == "pi" ]
        then
 	      A="armhf"
        else

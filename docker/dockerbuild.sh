@@ -29,7 +29,7 @@ PDIR=$(dirname $DIR)
 for T in $TARGETS; do
        if [ $T == "pi" ]
        then
-	      A="armhf"
+	      A="amd64"
 	      P="linux/arm"
        else
 	      A="amd64"

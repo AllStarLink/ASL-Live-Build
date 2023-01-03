@@ -1,4 +1,4 @@
-FROM amd64/debian:buster
+FROM arm64/debian:buster
 
 ARG USER_ID
 ARG GROUP_ID

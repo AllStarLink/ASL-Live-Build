@@ -12,6 +12,6 @@ jobs:
     uses: AllStarLink/asl_workflows/.github/workflows/ephemeral_ec2_run-this.yml@develop
     with:
       run-this: ./docker/dockerbuild.sh -t ${{ inputs.target }}
-      arch: ${{ inputs.target == 'pc' && 'x86_64' || inputs.target == 'pi' && 'arm64' || null }}
+      arch: ${{ inputs.target == 'pc' && 'x86_64' || inputs.target == 'pi' && 'x86_64' || null }}
       artifact-path: 'asl-*.*'
     secrets: inherit

@@ -30,10 +30,12 @@ for T in $TARGETS; do
        if [ $T == "pi" ]
        then
 	      A="armhf"
+	      P="arm32v7"
        else
 	      A="amd64"
+	      P="amd64"
        fi
        docker build -f $DIR/Dockerfile.$A -t asl-live_builder.$A --build-arg USER_ID=$(id -u) --build-arg GROUP_ID=$(id -g) $DIR
-       docker run --privileged -v $PDIR:/src -e TARGET=$T asl-live_builder.$A
+       docker run --privileged --platform $P -v $PDIR:/src -e TARGET=$T asl-live_builder.$A
        docker image rm --force asl-live_builder.$A
 done

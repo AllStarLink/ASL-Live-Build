@@ -8,7 +8,6 @@ OPTIONS=( --mode debian
 if [[ " ${@} " =~ " build_rpi " ]]; then
   args=( ${@/build_rpi} )
   OPTIONS+=(
-    --apt-http-proxy "http://127.0.0.1:3142"
     --architectures armhf 
     --image-name asl-${BUILDVER}-${BUILDDATE}-rpi
     --binary-images hdd 

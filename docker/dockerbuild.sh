@@ -26,6 +26,12 @@ echo "Targets: $TARGETS"
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 PDIR=$(dirname $DIR)
 
+# load the loop kernel module if it is not already loaded
+if ! lsmod | grep -q loop
+then
+  modprobe loop
+fi
+
 for T in $TARGETS; do
        if [ $T == "pi" ]
        then

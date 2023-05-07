@@ -1,3 +1,0 @@
-Package: raspberrypi-kernel-headers
-Pin: version *
-Pin-Priority: -1

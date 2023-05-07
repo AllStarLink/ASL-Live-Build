@@ -1,3 +1,0 @@
-NODE|CALL|INFO|LOCATION
-1000|WD6AWP|Private Hub|Huntington Beach
-

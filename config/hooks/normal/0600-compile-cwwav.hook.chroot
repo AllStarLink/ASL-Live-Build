@@ -1,5 +1,0 @@
-#!/bin/bash
-
-cd /usr/src/cwwav
-make
-make install

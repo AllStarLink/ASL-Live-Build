@@ -2,7 +2,7 @@
 
 export BUILDVER=$(cat .version)
 BUILDDATE=$(date +"%Y%m%d")
-DISTRO=$(echo "${*}" | grep "\-\-distribution" | sed 's/^.*--distribution \([^ ]*\) .*$/\1/g')
+DISTRO=$(echo "${*}" | grep "\-\-distribution" | sed 's/^.*--distribution \([^ ]*\).*$/\1/g')
 if [ -z $DISTRO ]; then
   DISTRO="buster"
 fi
@@ -82,5 +82,5 @@ deb http://apt.allstarlink.org/repos/asl_builds $DISTRO main
 EOF
 
 lb config noauto \
-    "${OPTIONS[@]}" \
-    "${args}"
+    "${args} \
+    "${OPTIONS[@]}"

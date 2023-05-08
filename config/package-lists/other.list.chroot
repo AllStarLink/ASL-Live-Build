@@ -49,12 +49,8 @@ netbase
 freetype2-doc
 fail2ban
 tcpdump
-fish
 vim
 git
-php7.3
-php7.3-cli
-cpanminus
 locate
 msmtp
 unattended-upgrades

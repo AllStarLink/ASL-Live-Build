@@ -60,3 +60,10 @@ for T in $TARGETS; do
          docker image rm --force asl-live_builder.$O.$A
        done
 done
+
+if compgen -G "*.img">/dev/null 2>&1 || compgen -G "*.iso">/dev/null 2>&1; then
+  exit 0
+else
+  echo "image file not found"
+  exit 1
+fi

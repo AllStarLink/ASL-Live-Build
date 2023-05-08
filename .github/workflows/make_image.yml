@@ -8,11 +8,17 @@ on:
         options: 
         - pc
         - pi
+      os:
+        type: choice
+        options:
+        - buster
+        - bullseye
+        - bookworm
 jobs:
   make-images:
     uses: AllStarLink/asl_workflows/.github/workflows/ephemeral_ec2_run-this.yml@develop
     with:
-      run-this: ./docker/dockerbuild.sh -t ${{ inputs.target }}
+      run-this: ./docker/dockerbuild.sh -t ${{ inputs.target }} -o ${{ inputs.os }}
       arch: ${{ inputs.target == 'pc' && 'x86_64' || inputs.target == 'pi' && 'x86_64' || null }}
       artifact-path: 'asl-*.*'
     secrets: inherit

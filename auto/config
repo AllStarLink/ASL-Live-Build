@@ -2,8 +2,11 @@
 
 export BUILDVER=$(cat .version)
 BUILDDATE=$(date +"%Y%m%d")
-OPTIONS=( --mode debian
-    --distribution buster )
+DISTRO=$(echo "${*}" | grep "\-\-distribution" | sed 's/^.*--distribution \([^ ]*\) .*$/\1/g')
+if [ -z $DISTRO ]; then
+  DISTRO="buster"
+fi
+OPTIONS=( --mode debian )
 
 if [[ " ${@} " =~ " build_rpi " ]]; then
   args=( ${@/build_rpi} )
@@ -39,6 +42,13 @@ if [[ " ${@} " =~ " build_rpi " ]]; then
 
   cp -a rpi_files/archives/* config/archives
   cp -a rpi_files/package-lists/* config/package-lists
+
+  (cat | tee config/archives/archive.raspbian.list.chroot config/archives/archive.raspbian.list.binary) << EOF
+deb http://archive.raspberrypi.org/debian/ $DISTRO main
+EOF
+  (cat | tee config/archives/azlux.list.chroot config/archives/azlux.list.binary) << EOF
+http://packages.azlux.fr/debian/ $DISTRO main
+EOF
 else
     args=${@}
     OPTIONS+=(
@@ -66,6 +76,10 @@ fi
 # check for qemu-static
 
 echo $BUILDVER > config/includes.chroot/etc/asl_version
+
+(cat | tee config/archives/allstar.list.chroot config/archives/allstar.list.binary) << EOF
+deb http://apt.allstarlink.org/repos/asl_builds $DISTRO main
+EOF
 
 lb config noauto \
     "${OPTIONS[@]}" \

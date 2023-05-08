@@ -6,6 +6,16 @@ DISTRO=$(echo "${*}" | grep "\-\-distribution" | sed 's/^.*--distribution \([^ ]
 if [ -z $DISTRO ]; then
   DISTRO="buster"
 fi
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
+if [ $BRANCH == "develop" ]; then
+  REPO_ENV="-devel"
+elif [ $BRANCH = "testing"]; then
+  REPO_ENV="-testing"
+else
+  REPO_ENV=""
+fi
+
 OPTIONS=()
 
 if [[ " ${@} " =~ " build_rpi " ]]; then
@@ -76,7 +86,7 @@ fi
 echo $BUILDVER > config/includes.chroot/etc/asl_version
 
 (cat | tee config/archives/allstar.list.chroot config/archives/allstar.list.binary) << EOF
-deb http://apt.allstarlink.org/repos/asl_builds $DISTRO main
+deb http://apt.allstarlink.org/repos/asl_builds$REPO_ENV $DISTRO main
 EOF
 
 lb config noauto --mode debian --distribution $DISTRO \

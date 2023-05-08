@@ -82,5 +82,5 @@ deb http://apt.allstarlink.org/repos/asl_builds $DISTRO main
 EOF
 
 lb config noauto --mode debian \
-    "${args}" \
+    "${args[@]}" \
     "${OPTIONS[@]}"

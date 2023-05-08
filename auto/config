@@ -9,7 +9,6 @@ fi
 OPTIONS=()
 
 if [[ " ${@} " =~ " build_rpi " ]]; then
-  args=( ${@/build_rpi} )
   OPTIONS+=(
     --architectures armhf 
     --image-name asl-${BUILDVER}-${BUILDDATE}-rpi
@@ -50,7 +49,6 @@ EOF
 http://packages.azlux.fr/debian/ $DISTRO main
 EOF
 else
-    args=${@}
     OPTIONS+=(
     --architectures amd64
     --image-name asl-${BUILDVER}-${BUILDDATE}-amd64
@@ -81,6 +79,5 @@ echo $BUILDVER > config/includes.chroot/etc/asl_version
 deb http://apt.allstarlink.org/repos/asl_builds $DISTRO main
 EOF
 
-lb config noauto --mode debian \
-    "${args[*]}" \
+lb config noauto --mode debian --distribution $DISTRO \
     "${OPTIONS[@]}"

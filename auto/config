@@ -6,7 +6,7 @@ DISTRO=$(echo "${*}" | grep "\-\-distribution" | sed 's/^.*--distribution \([^ ]
 if [ -z $DISTRO ]; then
   DISTRO="buster"
 fi
-OPTIONS=( --mode debian )
+OPTIONS=()
 
 if [[ " ${@} " =~ " build_rpi " ]]; then
   args=( ${@/build_rpi} )
@@ -81,6 +81,6 @@ echo $BUILDVER > config/includes.chroot/etc/asl_version
 deb http://apt.allstarlink.org/repos/asl_builds $DISTRO main
 EOF
 
-lb config noauto \
+lb config noauto --mode debian \
     "${args}" \
     "${OPTIONS[@]}"

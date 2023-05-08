@@ -1,5 +1,5 @@
 name: make_image
-run-name: Make ASL Image (${{ github.ref_name }}) for ${{ inputs.target }}
+run-name: Make ${{ inputs.os }} ASL Image (${{ github.ref_name }}) for ${{ inputs.target }}
 on: 
   workflow_dispatch:
     inputs:

@@ -53,7 +53,7 @@ for T in $TARGETS; do
 	      P="linux/amd64"
        fi
        for O in $OPERATING_SYSTEMS; do
-         docker build --platform $P -f $DIR/Dockerfile -t asl-live_builder.$O.$A --build-arg ARCH=$A --build-arg OS=$OS --build-arg USER_ID=$(id -u) --build-arg GROUP_ID=$(id -g) $DIR
+         docker build --platform $P -f $DIR/Dockerfile -t asl-live_builder.$O.$A --build-arg ARCH=$A --build-arg OS=$O --build-arg USER_ID=$(id -u) --build-arg GROUP_ID=$(id -g) $DIR
          docker run --privileged --platform $P -v $PDIR:/src -e TARGET=$T OS=$O asl-live_builder.$O.$A
          docker image rm --force asl-live_builder.$O.$A
        done

@@ -46,7 +46,7 @@ if [[ " ${@} " =~ " build_rpi " ]]; then
 deb http://archive.raspberrypi.org/debian/ $DISTRO main
 EOF
   (cat | tee config/archives/azlux.list.chroot config/archives/azlux.list.binary) << EOF
-http://packages.azlux.fr/debian/ $DISTRO main
+deb http://packages.azlux.fr/debian/ $DISTRO main
 EOF
 else
     OPTIONS+=(

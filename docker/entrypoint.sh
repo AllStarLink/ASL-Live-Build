@@ -2,5 +2,5 @@
 set -e
 
 cd /src
-make $TARGET
+make $TARGET OS=$OS
 ls -l

@@ -1,5 +1,10 @@
-FROM amd64/debian:buster
+ARG ARCH
+ARG OS
 
+FROM $ARCH/debian:$OS
+
+ARG ARCH
+ARG OS
 ARG USER_ID
 ARG GROUP_ID
 
@@ -28,7 +33,7 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -y install \
 RUN sed -i '1161s%umount%#umount%' /usr/share/debootstrap/functions
 
 # add the allstarlink repo
-RUN echo "deb https://apt.allstarlink.org/repos/asl_builds buster main" > /etc/apt/sources.list.d/allstarlink.list
+RUN echo "deb https://apt.allstarlink.org/repos/asl_builds $OS main" > /etc/apt/sources.list.d/allstarlink.list
 RUN wget -O - https://apt.allstarlink.org/repos/repo_signing.gpg | apt-key add -
 
 # Import entrypoint script

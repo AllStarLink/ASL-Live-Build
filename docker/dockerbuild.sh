@@ -52,8 +52,15 @@ for T in $TARGETS; do
 	      A="amd64"
 	      P="linux/amd64"
        fi
+       for A in $ARCHS; do
+              if [ "$A" == "armhf" ]; then
+                   DA="arm32v7"
+              else
+                   DA="$A"
+              fi
+       done
        for O in $OPERATING_SYSTEMS; do
-         docker build --platform $P -f $DIR/Dockerfile -t asl-live_builder.$O.$A --build-arg ARCH=$A --build-arg OS=$O --build-arg USER_ID=$(id -u) --build-arg GROUP_ID=$(id -g) $DIR
+         docker build --platform $P -f $DIR/Dockerfile -t asl-live_builder.$O.$A --build-arg ARCH=$DA --build-arg OS=$O --build-arg USER_ID=$(id -u) --build-arg GROUP_ID=$(id -g) $DIR
          docker run --privileged --platform $P -v $PDIR:/src -e TARGET=$T -e OS=$O asl-live_builder.$O.$A
          docker image rm --force asl-live_builder.$O.$A
        done

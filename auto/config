@@ -84,7 +84,7 @@ for f in `ls rpi_files/package-lists`; do
 done
 fi
 
-curl -L https://deb.debian.org/debian/pool/main/d/debian-archive-keyring/debian-archive-keyring_2023.3_all.deb | dpkg --fsys-tarfile - | tar xOf - ./usr/share/keyrings/debian-archive-$OS-stable.gpg > debian-archive-$OS-stable.gpg
+curl -L http://deb.debian.org/debian/pool/main/d/debian-archive-keyring/debian-archive-keyring_2023.3_all.deb | dpkg --fsys-tarfile - | tar xOf - ./usr/share/keyrings/debian-archive-$OS-stable.gpg > debian-archive-$OS-stable.gpg
 
 # check for qemu-static
 
@@ -93,9 +93,6 @@ echo $BUILDVER > config/includes.chroot/etc/asl_version
 (cat | tee config/archives/allstar.list.chroot config/archives/allstar.list.binary) << EOF
 deb http://apt.allstarlink.org/repos/asl_builds$REPO_ENV $DISTRO main
 EOF
-
-#curl https://deb.debian.org/debian/pool/main/d/debian-archive-keyring/debian-archive-keyring_2023.3_all.deb | dpkg --fsys-tarfile - | tar xOf - ./usr/share/keyrings/debian-archive-keyring.gpg > archive-keyring.gpg
-curl $KEYRING_DEB_URL | dpkg --fsys-tarfile - | tar xOf - ./usr/share/keyrings/debian-archive-keyring.gpg > archive-keyring.gpg
 
 lb config noauto --mode debian --distribution $DISTRO \
     "${OPTIONS[@]}"

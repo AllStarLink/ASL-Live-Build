@@ -1,6 +1,6 @@
 raspberrypi-bootloader
 raspberrypi-kernel-headers
-python-rpi.gpio
+python3-rpi.gpio
 fake-hwclock
 libraspberrypi-dev
 libraspberrypi-doc

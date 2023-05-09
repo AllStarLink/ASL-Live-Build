@@ -8,7 +8,6 @@ dphys-swapfile
 raspberrypi-sys-mods
 pi-bluetooth
 rpi-update
-vl805fw
 rpi-eeprom
 raspinfo
 libraspberrypi-bin

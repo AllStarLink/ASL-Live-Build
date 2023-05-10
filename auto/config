@@ -21,7 +21,7 @@ OPTIONS=()
 if [[ " ${@} " =~ " build_rpi " ]]; then
   OPTIONS+=(
     --architectures armhf 
-    --image-name asl-${BUILDVER}-${BUILDDATE}-rpi
+    --image-name asl-${BUILDVER}-${BUILDDATE}-${DISTRO}-rpi
     --binary-images hdd 
     --binary-filesystem ext4 
     --hdd-size 4096
@@ -64,7 +64,7 @@ curl -L http://raspbian.raspberrypi.org/raspbian/pool/main/r/raspbian-archive-ke
 else
     OPTIONS+=(
     --architectures amd64
-    --image-name asl-${BUILDVER}-${BUILDDATE}-amd64
+    --image-name asl-${BUILDVER}-${BUILDDATE}-${DISTRO}
     --debootstrap-options "--keyring ./debian-archive-$OS-stable.gpg --include=ca-certificates"
     --binary-images iso-hybrid
     --iso-application AllStarLink

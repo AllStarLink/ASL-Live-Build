@@ -61,7 +61,7 @@ for T in $TARGETS; do
        done
 done
 
-if compgen -G "*.img">/dev/null 2>&1 || compgen -G "*.iso">/dev/null 2>&1; then
+if compgen -G "*.img.zip">/dev/null 2>&1 || compgen -G "*.iso">/dev/null 2>&1; then
   exit 0
 else
   echo "image file not found"

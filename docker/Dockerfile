@@ -20,6 +20,7 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -y install \
     devscripts \
     fakeroot \
     fdisk \
+    parted \
     debhelper \
     automake \
     autotools-dev \

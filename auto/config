@@ -18,6 +18,12 @@ fi
 
 OPTIONS=()
 
+if [ "$DISTRO" == "bookworm" ] ; then
+  \rm config/package-lists/non-bookworm.list.chroot 2>/dev/null
+else
+  \cp non-bookworm.list.chroot config/package-lists/
+fi
+
 if [[ " ${@} " =~ " build_rpi " ]]; then
   OPTIONS+=(
     --architectures armhf 
@@ -72,7 +78,7 @@ else
     --iso-volume "ASL-${BUILDVER}"
     --debian-installer live
     --debian-installer-gui false
-    --archive-areas "main contrib non-free"
+    --archive-areas "main contrib non-free $( [ "$DISTRO" == "bookworm" ] && echo non-free-firmware )"
     --win32-loader "false"
     --security true )
 for f in `ls rpi_files/archives/`; do

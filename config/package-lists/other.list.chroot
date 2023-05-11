@@ -8,7 +8,6 @@ psmisc
 strace
 ed
 ncdu
-crda
 console-setup
 keyboard-configuration
 debconf-utils
@@ -16,7 +15,6 @@ parted
 unzip
 build-essential
 manpages-dev
-python
 bash-completion
 gdb
 pkg-config

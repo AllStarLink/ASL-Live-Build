@@ -20,8 +20,10 @@ OPTIONS=()
 
 if [ "$DISTRO" == "bookworm" ] ; then
   \rm config/package-lists/non-bookworm.list.chroot 2>/dev/null
+  AZLUX_DISTRO=testing
 else
   \cp non-bookworm.list.chroot config/package-lists/
+  AZLUX_DISTRO=$DISTRO
 fi
 
 if [[ " ${@} " =~ " build_rpi " ]]; then
@@ -61,8 +63,9 @@ if [[ " ${@} " =~ " build_rpi " ]]; then
   (cat | tee config/archives/archive.raspbian.list.chroot config/archives/archive.raspbian.list.binary) << EOF
 deb http://archive.raspberrypi.org/debian/ $DISTRO main
 EOF
+
   (cat | tee config/archives/azlux.list.chroot config/archives/azlux.list.binary) << EOF
-deb http://packages.azlux.fr/debian/ $DISTRO main
+deb http://packages.azlux.fr/debian/ $AZLUX_DISTRO main
 EOF
 
 curl -L http://raspbian.raspberrypi.org/raspbian/pool/main/r/raspbian-archive-keyring/raspbian-archive-keyring_20120528.2_all.deb | dpkg --fsys-tarfile - | tar xOf - ./usr/share/keyrings/raspbian-archive-keyring.gpg > raspbian-archive-keyring.gpg

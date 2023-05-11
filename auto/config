@@ -65,7 +65,7 @@ else
     OPTIONS+=(
     --architectures amd64
     --image-name asl-${BUILDVER}-${BUILDDATE}-${DISTRO}
-    --debootstrap-options "--keyring ./debian-archive-$OS-stable.gpg --include=ca-certificates"
+    --debootstrap-options "--include=ca-certificates"
     --binary-images iso-hybrid
     --iso-application AllStarLink
     --iso-publisher "AllStarLink, Inc."
@@ -83,8 +83,6 @@ for f in `ls rpi_files/package-lists`; do
   rm config/package-lists/$f 2>/dev/null
 done
 fi
-
-curl -L http://deb.debian.org/debian/pool/main/d/debian-archive-keyring/debian-archive-keyring_2023.3_all.deb | dpkg --fsys-tarfile - | tar xOf - ./usr/share/keyrings/debian-archive-$OS-stable.gpg > debian-archive-$OS-stable.gpg
 
 # check for qemu-static
 
